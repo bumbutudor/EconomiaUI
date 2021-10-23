@@ -10,6 +10,10 @@ export default function () {
         if (items.has('newDiscussion')) {
             items.remove('newDiscussion');
         }
+
+        if (items.has('tags')) {
+            items.remove('tags');
+        }
     });
 
     extend(IndexPage.prototype, 'actionItems', function (items) {
