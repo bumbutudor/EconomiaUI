@@ -33624,10 +33624,6 @@ __webpack_require__.r(__webpack_exports__);
     if (items.has('newDiscussion')) {
       items.remove('newDiscussion');
     }
-
-    if (items.has('tags')) {
-      items.remove('tags');
-    }
   });
   Object(flarum_extend__WEBPACK_IMPORTED_MODULE_1__["extend"])(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_2___default.a.prototype, 'actionItems', function (items) {
     var _this = this;
