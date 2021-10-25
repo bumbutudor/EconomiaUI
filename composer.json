@@ -34,7 +34,7 @@
             "title": "Economia UI",
             "category": "",
             "icon": {
-                "name": "fa-shekel-sign",
+                "name": "fas fa-shekel-sign",
                 "backgroundColor": "",
                 "color": ""
             }
