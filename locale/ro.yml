@@ -5,6 +5,7 @@ tudor-economia-ui:
       sort_button_2: "Cele mai citite"
       sort_button_3: "Cele mai noi"
       sort_button_4: "Cele mai vechi"
+      sort_button_5: "Cele mai votate"
       likes: "votes"
       comments: "comments"
       views: "views"

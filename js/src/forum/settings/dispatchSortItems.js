@@ -22,16 +22,16 @@ export default function () {
         //     )
         // );
       
-        items.add(
-            'Citite',
-            LinkButton.component({
-                title: "Citite",
-                className: 'Button Button--primary',
-                href: '/',
-            },
-                app.translator.trans('tudor-economia-ui.forum.sort_button_2')
-            )
-        );
+        // items.add(
+        //     'Citite',
+        //     LinkButton.component({
+        //         title: "Citite",
+        //         className: 'Button Button--primary',
+        //         href: '/',
+        //     },
+        //         app.translator.trans('tudor-economia-ui.forum.sort_button_2')
+        //     )
+        // );
 
         items.add(
             'Noi',
@@ -52,6 +52,18 @@ export default function () {
                 href: '?sort=oldest',
             },
                 app.translator.trans('tudor-economia-ui.forum.sort_button_4')
+            )
+        );
+
+        
+        items.add(
+            'Vote',
+            LinkButton.component({
+                title: "Vote",
+                className: 'Button Button--primary',
+                href: '?sort=hot',
+            },
+                app.translator.trans('tudor-economia-ui.forum.sort_button_5')
             )
         );
     })
