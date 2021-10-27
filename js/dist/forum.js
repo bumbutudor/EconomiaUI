@@ -180,7 +180,7 @@ __webpack_require__.r(__webpack_exports__);
       href: '?sort=oldest'
     }, flarum_common_app__WEBPACK_IMPORTED_MODULE_0___default.a.translator.trans('tudor-economia-ui.forum.sort_button_4')));
     items.add('Vote', m(flarum_components_LinkButton__WEBPACK_IMPORTED_MODULE_3___default.a, {
-      href: flarum_common_app__WEBPACK_IMPORTED_MODULE_0___default.a.route('?sort=hot'),
+      href: "?sort=hot",
       title: flarum_common_app__WEBPACK_IMPORTED_MODULE_0___default.a.translator.trans('tudor-economia-ui.forum.sort_button_5')
     }, flarum_common_app__WEBPACK_IMPORTED_MODULE_0___default.a.translator.trans('tudor-economia-ui.forum.sort_button_5')));
   });

@@ -58,7 +58,7 @@ export default function () {
         
         items.add(
             'Vote', 
-            <LinkButton href={app.route('?sort=hot')} title={app.translator.trans('tudor-economia-ui.forum.sort_button_5')}>
+            <LinkButton href='?sort=hot' title={app.translator.trans('tudor-economia-ui.forum.sort_button_5')}>
                 {app.translator.trans('tudor-economia-ui.forum.sort_button_5')}
             </LinkButton>
         );
