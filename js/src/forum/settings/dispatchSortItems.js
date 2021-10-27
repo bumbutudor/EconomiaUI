@@ -57,14 +57,13 @@ export default function () {
 
         
         items.add(
-            'Vote',
-            LinkButton.component({
-                title: "Vote",
-                className: 'Button Button--primary',
-                href: '?sort=hot',
-            },
-                app.translator.trans('tudor-economia-ui.forum.sort_button_5')
-            )
+            'Vote', 
+            <LinkButton href={app.route('?sort=hot')} title={app.translator.trans('tudor-economia-ui.forum.sort_button_5')}>
+                {app.translator.trans('tudor-economia-ui.forum.sort_button_5')}
+            </LinkButton>
         );
+
+
+        
     })
 }
