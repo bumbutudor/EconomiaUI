@@ -35,24 +35,16 @@ export default function () {
 
         items.add(
             'Noi',
-            LinkButton.component({
-                title: "Noi",
-                className: 'Button Button--primary',
-                href: '?sort=newest',
-            },
-                app.translator.trans('tudor-economia-ui.forum.sort_button_3')
-            )
+            <LinkButton href='?sort=newest' title={app.translator.trans('tudor-economia-ui.forum.sort_button_3')}>
+                {app.translator.trans('tudor-economia-ui.forum.sort_button_3')}
+            </LinkButton>
         );
 
         items.add(
             'Vechi',
-            LinkButton.component({
-                title: "Vechi",
-                className: 'Button Button--primary',
-                href: '?sort=oldest',
-            },
-                app.translator.trans('tudor-economia-ui.forum.sort_button_4')
-            )
+            <LinkButton href='?sort=oldest' title={app.translator.trans('tudor-economia-ui.forum.sort_button_4')}>
+                {app.translator.trans('tudor-economia-ui.forum.sort_button_4')}
+            </LinkButton>
         );
 
         

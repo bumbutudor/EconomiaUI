@@ -169,15 +169,13 @@ __webpack_require__.r(__webpack_exports__);
     // );
 
 
-    items.add('Noi', flarum_components_LinkButton__WEBPACK_IMPORTED_MODULE_3___default.a.component({
-      title: "Noi",
-      className: 'Button Button--primary',
-      href: '?sort=newest'
+    items.add('Noi', m(flarum_components_LinkButton__WEBPACK_IMPORTED_MODULE_3___default.a, {
+      href: "?sort=newest",
+      title: flarum_common_app__WEBPACK_IMPORTED_MODULE_0___default.a.translator.trans('tudor-economia-ui.forum.sort_button_3')
     }, flarum_common_app__WEBPACK_IMPORTED_MODULE_0___default.a.translator.trans('tudor-economia-ui.forum.sort_button_3')));
-    items.add('Vechi', flarum_components_LinkButton__WEBPACK_IMPORTED_MODULE_3___default.a.component({
-      title: "Vechi",
-      className: 'Button Button--primary',
-      href: '?sort=oldest'
+    items.add('Vechi', m(flarum_components_LinkButton__WEBPACK_IMPORTED_MODULE_3___default.a, {
+      href: "?sort=oldest",
+      title: flarum_common_app__WEBPACK_IMPORTED_MODULE_0___default.a.translator.trans('tudor-economia-ui.forum.sort_button_4')
     }, flarum_common_app__WEBPACK_IMPORTED_MODULE_0___default.a.translator.trans('tudor-economia-ui.forum.sort_button_4')));
     items.add('Vote', m(flarum_components_LinkButton__WEBPACK_IMPORTED_MODULE_3___default.a, {
       href: "?sort=hot",
