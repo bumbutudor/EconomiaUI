@@ -115,9 +115,9 @@ __webpack_require__.r(__webpack_exports__);
 
  // import CardItem from './settings/CardItem.js';
 
-app.initializers.add('tudor/economia-ui', function () {
-  Object(_settings_moveButtonToRight_js__WEBPACK_IMPORTED_MODULE_0__["default"])();
-  Object(_settings_dispatchSortItems_js__WEBPACK_IMPORTED_MODULE_1__["default"])(); // CardItem();
+app.initializers.add('tudor/economia-ui', function () {//moveButtonToRight();
+  //dispatchSortItems();
+  // CardItem();
 });
 
 /***/ }),
