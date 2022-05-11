@@ -5,9 +5,10 @@
         "flarum"
     ],
     "type": "flarum-extension",
-    "license": "0BSD",
+    "license": "MIT",
     "require": {
-        "flarum/core": "^1.0.0"
+        "flarum/core": "^1.0.0",
+        "afrux/forum-widgets-core": "^0.1.0"
     },
     "require-dev": {
         "flarum/testing": "^1.0.0"
@@ -35,8 +36,8 @@
             "category": "",
             "icon": {
                 "name": "fas fa-shekel-sign",
-                "backgroundColor": "",
-                "color": ""
+                "backgroundColor": "#083",
+                "color": "#fff"
             }
         }
     },

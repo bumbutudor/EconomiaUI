@@ -1,3 +1,5 @@
+import registerWidget from '../common/registerWidget';
+
 app.initializers.add('tudor/economia-ui', () => {
-  console.log('[tudor/economia-ui] Hello, admin!');
+    registerWidget(app);
 });
