@@ -28,32 +28,25 @@ app.initializers.add('tudor/economia-ui', () => {
 
     if (app.discussions.hasItems() || app.discussions.isLoading()) {
       app.pane?.enable();
-      app.pane?.hide();
     }
+    
   });
 
-  extend(InlineArticleView.prototype, 'content', function (view) {
-    const discussionPageView = DiscussionPage.prototype.view();
-      view.children.pop();
-      view.children.push(discussionPageView);
+
+  extend(DiscussionPage.prototype, 'view', function (view) {
+    const index = IndexPage.prototype.sidebarItems();
+    // const index = IndexPage.prototype.view();
+
+    view.children.unshift(
+      <nav className="IndexPage-nav sideNav">
+        <ul>{listItems(index.toArray())}</ul>
+      </nav>
+    );
+    // view.children.unshift(
+    //   index
+    // );
 
   });
-
-  // extend(DiscussionPage.prototype, 'view', function (view) {
-  //   // const index = IndexPage.prototype.sidebarItems();
-  //   const index = IndexPage.prototype.view();
-
-  //   // view.children.unshift(
-  //   //   <nav className="IndexPage-nav sideNav">
-  //   //     <ul>{listItems(index.toArray())}</ul>
-  //   //   </nav>
-  //   // );
-  //   view.children.unshift(
-  //     index
-  //   );
-
-  //   // console.log(view);
-  // });
 
   // extend(DiscussionListItem.prototype, 'view', function (view) {
   //   // get needed data

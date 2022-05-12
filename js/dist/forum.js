@@ -1,2 +1,1808 @@
-module.exports=function(t){var n={};function e(o){if(n[o])return n[o].exports;var r=n[o]={i:o,l:!1,exports:{}};return t[o].call(r.exports,r,r.exports,e),r.l=!0,r.exports}return e.m=t,e.c=n,e.d=function(t,n,o){e.o(t,n)||Object.defineProperty(t,n,{enumerable:!0,get:o})},e.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},e.t=function(t,n){if(1&n&&(t=e(t)),8&n)return t;if(4&n&&"object"==typeof t&&t&&t.__esModule)return t;var o=Object.create(null);if(e.r(o),Object.defineProperty(o,"default",{enumerable:!0,value:t}),2&n&&"string"!=typeof t)for(var r in t)e.d(o,r,function(n){return t[n]}.bind(null,r));return o},e.n=function(t){var n=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(n,"a",n),n},e.o=function(t,n){return Object.prototype.hasOwnProperty.call(t,n)},e.p="",e(e.s=20)}([function(t,n){t.exports=flarum.core.compat.app},function(t,n){t.exports=flarum.core.compat["common/app"]},function(t,n){t.exports=flarum.core.compat.extend},function(t,n,e){"use strict";e.d(n,"a",(function(){return f}));var o=e(4),r=e(8),i=e.n(r),s=e(0),a=e.n(s),c=e(9),u=e.n(c),p=e(10),l=e.n(p),f=function(t){function n(){return t.apply(this,arguments)||this}Object(o.a)(n,t);var e=n.prototype;return e.oninit=function(n){t.prototype.oninit.call(this,n),this.discussion,this.stream,this.near=0,this.useBrowserScrollRestoration=!0},e.className=function(){return"InlineArticleView"},e.icon=function(){return"fas fa-cirlce"},e.title=function(){return a.a.translator.trans("InlineArticle")},e.content=function(){var t=a.a.translator.trans("core.forum.discussion_list.empty_text");return this.discussion=a.a.discussion,m("div",{className:"Tudor-InlineArticleViewWidget"},this.discussion?this.discussionPage():u.a.component({text:t}))},e.discussionPage=function(){return m("div",{className:"DiscussionPage"},this.discussion.title())},e.load=function(){var t=a.a.preloadedApiDocument();if(t)setTimeout(this.show.bind(this,t),0);else{var n=this.requestParams();a.a.store.find,l.a,(this.discussion.id(),n).then(this.show.bind(this))}m.redraw()},e.show=function(t){var n,e,o=this;a.a.history.push("discussion",t.title()),a.a.setTitle(t.title()),a.a.setTitleCount(0);var r=[];if(t.payload&&t.payload.included){var i=t.id();r=t.payload.included.filter((function(t){return"posts"===t.type&&t.relationships&&t.relationships.discussion&&!Array.isArray(t.relationships.discussion.data)&&t.relationships.discussion.data.id===i})).map((function(t){return a.a.store.getById<Post>t.id})).sort((function(t,n){return t.number()-n.number()})).slice(0,20)}this.stream=new PostStreamState(t,r);var s=m.route.param("near"),c="reply"===s?"reply":parseInt(s);this.stream.goToNumber(c||(null!=(n=null==(e=r[0])?void 0:e.number())?n:0),!0).then((function(){o.discussion=t,a.a.current.set("discussion",t),a.a.current.set("stream",o.stream)}))},e.requestParams=function(){return{bySlug:!0,page:{near:this.near}}},n}(i.a)},function(t,n,e){"use strict";function o(t,n){return(o=Object.setPrototypeOf||function(t,n){return t.__proto__=n,t})(t,n)}function r(t,n){t.prototype=Object.create(n.prototype),t.prototype.constructor=t,o(t,n)}e.d(n,"a",(function(){return r}))},function(t,n){t.exports=flarum.core.compat["components/IndexPage"]},function(t,n,e){"use strict";var o=e(7),r=e.n(o),i=e(3);n.a=function(t){(new r.a).add({key:"discussions",component:i.a,isDisabled:!1,isUnique:!0,placement:"end",position:1}).extend(t,"tudor-economia-ui")}},function(t,n){t.exports=flarum.core.compat["extensions/afrux-forum-widgets-core/common/extend/Widgets"]},function(t,n){t.exports=flarum.core.compat["extensions/afrux-forum-widgets-core/common/components/Widget"]},function(t,n){t.exports=flarum.core.compat["common/components/Placeholder"]},function(t,n){t.exports=flarum.core.compat["common/models/Discussion"]},function(t,n){t.exports=flarum.core.compat["components/LinkButton"]},function(t,n){t.exports=flarum.core.compat["components/DiscussionPage"]},function(t,n){t.exports=flarum.core.compat["components/Button"]},function(t,n){t.exports=flarum.core.compat["common/Component"]},function(t,n){t.exports=flarum.core.compat["components/DiscussionListItem"]},function(t,n){t.exports=flarum.core.compat["helpers/highlight"]},function(t,n){t.exports=flarum.core.compat["utils/escapeRegExp"]},function(t,n){t.exports=flarum.core.compat["common/components/Page"]},function(t,n){t.exports=flarum.core.compat["common/helpers/listItems"]},function(t,n,e){"use strict";e.r(n);e(1);var o=e(2),r=(e(5),e(13),e(11),e(6)),i=(e(15),e(12)),s=e.n(i),a=e(3),c=(e(16),e(17),e(0)),u=e.n(c),p=e(4),l=(e(18),e(14));e.n(l).a,e(19);u.a.initializers.add("tudor/economia-ui",(function(){Object(r.a)(u.a),Object(o.extend)(s.a.prototype,"oninit",(function(){var t,n;(u.a.discussions.refreshParams(u.a.search.params(),m.route.param("page")),u.a.discussions.hasItems()||u.a.discussions.isLoading())&&(null==(t=u.a.pane)||t.enable(),null==(n=u.a.pane)||n.hide())})),Object(o.extend)(a.a.prototype,"content",(function(t){var n=s.a.prototype.view();t.children.pop(),t.children.push(n)}))}))}]);
+module.exports =
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./forum.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./forum.js":
+/*!******************!*\
+  !*** ./forum.js ***!
+  \******************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _src_forum__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./src/forum */ "./src/forum/index.js");
+/* empty/unused harmony star reexport */
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/extends.js":
+/*!************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/extends.js ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _extends; });
+function _extends() {
+  _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js ***!
+  \******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _inheritsLoose; });
+/* harmony import */ var _setPrototypeOf_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./setPrototypeOf.js */ "./node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js");
+
+function _inheritsLoose(subClass, superClass) {
+  subClass.prototype = Object.create(superClass.prototype);
+  subClass.prototype.constructor = subClass;
+  Object(_setPrototypeOf_js__WEBPACK_IMPORTED_MODULE_0__["default"])(subClass, superClass);
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js ***!
+  \*********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _objectWithoutPropertiesLoose; });
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _setPrototypeOf; });
+function _setPrototypeOf(o, p) {
+  _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+
+  return _setPrototypeOf(o, p);
+}
+
+/***/ }),
+
+/***/ "./src/common/components/GugutaRight.js":
+/*!**********************************************!*\
+  !*** ./src/common/components/GugutaRight.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return GugutaRight; });
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var _babel_runtime_helpers_esm_objectWithoutPropertiesLoose__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/objectWithoutPropertiesLoose */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inheritsLoose */ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js");
+/* harmony import */ var flarum_components_Tooltip__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/components/Tooltip */ "flarum/components/Tooltip");
+/* harmony import */ var flarum_components_Tooltip__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_components_Tooltip__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var flarum_Component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! flarum/Component */ "flarum/Component");
+/* harmony import */ var flarum_Component__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(flarum_Component__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var flarum_utils_classList__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! flarum/utils/classList */ "flarum/utils/classList");
+/* harmony import */ var flarum_utils_classList__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(flarum_utils_classList__WEBPACK_IMPORTED_MODULE_5__);
+
+
+
+var _excluded = ["info", "type", "style"];
+
+
+
+/**
+ * The `Guguta` component is a sprite that helps the user to navigate the portlet,
+ * indicating some guidelines.
+ * 
+ * @class Guguta may have the following attributes:
+ * 
+ * - `type`: the type of the guideline. This will be used to give the sprite
+ *  the appropriate class (`Guguta--{type}`). The available types are:
+ * 'top', 'bottom', 'left', 'right'.
+ */
+
+var GugutaRight = /*#__PURE__*/function (_Component) {
+  Object(_babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_2__["default"])(GugutaRight, _Component);
+
+  function GugutaRight() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = GugutaRight.prototype;
+
+  _proto.view = function view() {
+    var _this$attrs = this.attrs,
+        info = _this$attrs.info,
+        type = _this$attrs.type,
+        _this$attrs$style = _this$attrs.style,
+        style = _this$attrs$style === void 0 ? {} : _this$attrs$style,
+        attrs = Object(_babel_runtime_helpers_esm_objectWithoutPropertiesLoose__WEBPACK_IMPORTED_MODULE_1__["default"])(_this$attrs, _excluded);
+
+    var className = flarum_utils_classList__WEBPACK_IMPORTED_MODULE_5___default()('Guguta', [type && "Guguta--" + type], attrs.className);
+
+    var gugutaAttrs = Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, attrs, {
+      className: className,
+      style: style
+    });
+
+    var svgGuguta = m("svg", {
+      "data-v-02673ce3": "",
+      viewBox: "0 0 1546 3020",
+      fill: "none",
+      xmlns: "http://www.w3.org/2000/svg"
+    }, m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M1107.59 1014.82C1107.59 1014.82 1245.6 1152.61 1302.68 1267.52C1359.76 1382.43 1325.4 1481.56 1325.4 1481.56C1325.4 1481.56 1286.77 1696.27 963.719 1731.73C960.199 1732.11 936.899 1774.25 927.759 1821.84C917.239 1876.68 920.739 1937.99 916.519 1938.32C899.799 1939.64 832.499 1922.68 802.259 1872.67C792.359 1856.3 794.179 1776.96 792.819 1771.92C787.329 1751.5 779.729 1733.48 774.969 1732.63C715.189 1721.99 575.299 1646.04 529.459 1578.76C522.039 1567.88 448.159 1589.76 391.429 1544.58C360.309 1519.8 323.479 1466.93 313.549 1410.78C307.829 1378.4 318.619 1347.51 325.149 1313.65C327.609 1300.87 375.009 1286.2 410.889 1309.9C452.039 1337.09 482.269 1403.47 483.689 1390.35C487.819 1351.86 495.339 1323.28 495.339 1323.28L521.679 1257.62L694.799 1204.28L785.969 1157.89L860.679 1103.6L946.089 1056.64L871.319 1125.98L782.089 1189.49L862.489 1177.62L939.679 1132.53L1042.25 1042.07L968.459 1123.81L907.239 1216.46L973.419 1189.8L1027.77 1141.23L1107.59 1014.82Z",
+      fill: "#E7BFA7"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M1198.96 1311.18C1198.96 1311.18 1128.82 1250.68 1077.18 1270.02C956.431 1315.26 989.801 1391.46 1017.31 1432.28C1068.68 1508.47 1128.55 1463.23 1128.55 1463.23L1191.63 1429.21L1210.21 1361.9L1198.96 1311.18Z",
+      fill: "white"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M801.383 1328.85C801.383 1328.85 769.523 1255.44 716.603 1246.42C663.683 1237.41 589.693 1292.79 589.693 1292.79C589.693 1292.79 572.193 1358.24 596.713 1390.88C604.243 1400.89 611.593 1410.43 623.833 1413.4C644.593 1418.44 687.223 1421.72 713.123 1435.42C731.773 1445.28 753.543 1440.03 769.413 1427.04C785.353 1414 795.773 1389.5 795.773 1389.5L801.383 1328.85Z",
+      fill: "white"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M955.59 1599.02C955.59 1599.02 925.85 1605.58 886.75 1598.82C871.15 1596.12 858.04 1593.41 837.74 1585.76C817.83 1578.25 798.7 1570.19 787.68 1558.3C728.92 1494.91 708.47 1492.04 708.47 1492.04C708.47 1492.04 718.17 1503.73 727.91 1521.37C744.37 1551.17 739.75 1580.26 811.09 1629.13C859.68 1662.42 894.27 1636.9 894.27 1636.9L955.59 1599.02Z",
+      fill: "white"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M1439.4 1202.6C1465.47 1197.35 1480 1170.46 1477.99 1149.89C1476.21 1131.71 1459.2 1119.28 1459.2 1119.28C1459.2 1119.28 1487.4 1105.71 1492.9 1073.32C1494.25 1065.39 1491.32 1047.28 1484.05 1038.05C1476.92 1028.99 1465.45 1028.72 1465.45 1028.72C1465.45 1028.72 1519.18 998.191 1514.43 941.711C1512.05 913.491 1445.88 874.171 1445.88 874.171C1445.88 874.171 1493.37 872.631 1495.34 832.671C1497.92 780.304 1445.87 768.49 1445.87 768.49C1445.87 768.49 1462.56 728.603 1447.56 697.124C1442.63 686.768 1426.26 668.067 1413.68 661.082C1401.89 654.535 1387.64 650.271 1384.69 646.286C1374.64 632.706 1362.33 605.14 1336.4 587.4C1307.24 567.452 1270.94 567.262 1270.94 567.262C1270.94 567.262 1263.96 529.785 1238.71 511.224C1213.45 492.664 1169.91 493.02 1169.91 493.02C1169.91 493.02 1183.3 444.242 1170.48 420.309C1157.65 396.376 1118.61 397.289 1118.61 397.289C1118.61 397.289 1138.39 329.661 1111.68 304.915C1058.48 255.625 1005.22 300.888 1005.22 300.888C1005.22 300.888 1010.19 225.19 981.2 199.504C952.22 173.818 892.43 197.134 892.43 197.134C892.43 197.134 898.08 183.205 900.73 163.419C903.17 145.263 904.02 122.35 875.64 96.986C846.57 71.007 823.12 107.315 818.54 105.893C803.44 101.208 812.21 69.099 783.03 60.184C753.04 51.023 742.35 75.132 727.1 71.442C718.21 69.293 727.61 66.341 725.73 56.062C722.64 39.164 707.95 11.518 670.92 2.02297C626.68 -9.32603 618.29 30.778 618.29 30.778C618.29 30.778 570.1 5.75097 555.51 44.777C538.51 90.271 586.18 144.031 586.18 144.031C586.18 144.031 549.95 181.266 552.37 223.372C554.79 265.478 600.72 310.566 600.72 310.566C600.72 310.566 552.75 337.677 564.87 381.441C572.83 410.187 604.87 434.796 604.87 434.796C604.87 434.796 568.1 450.92 573.3 501.33C576.61 533.441 613.45 563.637 613.45 563.637C613.45 563.637 565.2 571.763 571.44 617.095C574.42 638.745 603.13 656.306 603.13 656.306C603.13 656.306 569.56 679.542 562.76 705.195C555.97 730.847 575.95 758.914 575.95 758.914C575.95 758.914 528.88 758.8 514.81 779.667C499.2 802.801 536.67 812.351 526.38 822.851C512.71 836.791 484.88 844.511 477.56 856.981C462.9 881.921 487.27 919.801 487.27 919.801C487.27 919.801 431.68 937.311 442.99 980.371C446.37 993.251 464.58 1011.61 464.58 1011.61C464.58 1011.61 433.08 1049.03 437.91 1074.41C442.73 1099.79 483.88 1113.11 483.88 1113.11L492.05 1155.68C492.05 1155.68 516.11 1159.4 536.86 1145.98C544.12 1141.28 551.18 1127.67 554.32 1114.62C555.94 1107.9 550.8 1099.7 556.09 1096.34C567.21 1089.28 569.23 1110.56 596.99 1104.04C624.75 1097.52 636.98 1051.81 636.98 1051.81C636.98 1051.81 646.86 1075.69 678.14 1063.68C695.79 1056.91 701.74 1049.18 703.06 1040.93C704.08 1034.57 700.01 1027.31 710.94 1023.61C724.75 1018.93 745.66 1037.19 763.9 1033.53C787.18 1028.85 819.27 987.671 819.27 987.671C819.27 987.671 849.08 1006.59 874.59 998.641C884.9 995.431 894.99 984.671 903.1 974.511C907.39 969.121 909.08 960.521 914.44 960.711C920.51 960.921 922.01 973.181 925.73 980.031C932.24 992.051 955.38 1009.73 960.41 1009.83C984.31 1010.31 1023.53 980.221 1023.53 980.221C1023.53 980.221 1032.05 1013.36 1052.79 1016.44C1073.53 1019.52 1106.51 992.541 1106.51 992.541C1106.51 992.541 1115 1038.55 1139.41 1048.55C1163.83 1058.55 1204.17 1032.55 1204.17 1032.55C1204.17 1032.55 1211.34 1075.32 1232.08 1085.21C1252.82 1095.1 1287.12 1072.12 1287.12 1072.12C1287.12 1072.12 1301.16 1123.17 1321.8 1139.62C1342.45 1156.07 1369.68 1137.93 1369.68 1137.93C1369.68 1137.93 1362.4 1218.11 1439.4 1202.6Z",
+      fill: "#565656"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M876.539 833.57C876.539 806.33 853.589 784.25 825.279 784.25C796.969 784.25 774.029 806.33 774.029 833.57C774.029 860.8 796.969 882.89 825.279 882.89C853.589 882.89 876.539 860.8 876.539 833.57Z",
+      fill: "#7C7C7C"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M1080.3 548.956C1080.3 510.448 1047.45 479.23 1006.92 479.23C966.391 479.23 933.531 510.448 933.531 548.956C933.531 587.464 966.391 618.68 1006.92 618.68C1047.45 618.68 1080.3 587.464 1080.3 548.956Z",
+      fill: "#7C7C7C"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M685.57 151.897C685.57 131.444 669.02 114.863 648.6 114.863C628.19 114.863 611.64 131.444 611.64 151.897C611.64 172.351 628.19 188.932 648.6 188.932C669.02 188.932 685.57 172.351 685.57 151.897Z",
+      fill: "#7C7C7C"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M1214.84 820.69C1214.84 790.503 1192.39 766.031 1164.69 766.031C1137 766.031 1114.55 790.503 1114.55 820.69C1114.55 850.88 1137 875.35 1164.69 875.35C1192.39 875.35 1214.84 850.88 1214.84 820.69Z",
+      fill: "#7C7C7C"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M1344.65 728.482C1344.65 704.605 1326.59 685.25 1304.32 685.25C1282.05 685.25 1264 704.605 1264 728.482C1264 752.358 1282.05 771.713 1304.32 771.713C1326.59 771.713 1344.65 752.358 1344.65 728.482Z",
+      fill: "#7C7C7C"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M1371.49 980.132C1371.49 950.712 1345.83 926.852 1314.19 926.852C1282.54 926.852 1256.88 950.712 1256.88 980.132C1256.88 1009.56 1282.54 1033.41 1314.19 1033.41C1345.83 1033.41 1371.49 1009.56 1371.49 980.132Z",
+      fill: "#7C7C7C"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M721.781 877.761C721.781 847.041 697.471 822.141 667.491 822.141C637.501 822.141 613.191 847.041 613.191 877.761C613.191 908.471 637.501 933.371 667.491 933.371C697.471 933.371 721.781 908.471 721.781 877.761Z",
+      fill: "#7C7C7C"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M703.621 518.562C703.621 500.705 689.211 486.229 671.421 486.229C653.631 486.229 639.221 500.705 639.221 518.562C639.221 536.42 653.631 550.897 671.421 550.897C689.211 550.897 703.621 536.42 703.621 518.562Z",
+      fill: "#7C7C7C"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M676.77 691.358C676.77 674.339 662.9 660.543 645.8 660.543C628.69 660.543 614.82 674.339 614.82 691.358C614.82 708.377 628.69 722.173 645.8 722.173C662.9 722.173 676.77 708.377 676.77 691.358Z",
+      fill: "#7C7C7C"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M593.832 1017.39C593.832 998.331 577.752 982.881 557.902 982.881C538.062 982.881 521.982 998.331 521.982 1017.39C521.982 1036.45 538.062 1051.9 557.902 1051.9C577.752 1051.9 593.832 1036.45 593.832 1017.39Z",
+      fill: "#7C7C7C"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M907.961 279.96C907.961 257.5 889.491 239.293 866.711 239.293C843.921 239.293 825.451 257.5 825.451 279.96C825.451 302.419 843.921 320.626 866.711 320.626C889.491 320.626 907.961 302.419 907.961 279.96Z",
+      fill: "#7C7C7C"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M1074.71 390.877C1074.71 369.666 1056.46 352.471 1033.95 352.471C1011.44 352.471 993.191 369.666 993.191 390.877C993.191 412.088 1011.44 429.283 1033.95 429.283C1056.46 429.283 1074.71 412.088 1074.71 390.877Z",
+      fill: "#7C7C7C"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M1081.99 1068.67C1081.99 1068.67 1118.9 1102.33 1200.84 1177.45C1278.67 1248.79 1335.37 1406.52 1335.37 1406.52C1335.37 1406.52 1343.81 1340.25 1287.31 1239.75C1230.82 1139.25 1109.4 1004.5 1109.4 1004.5L1081.99 1068.67Z",
+      fill: "#AA7872"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M1105.21 1015.53C1105.21 1015.53 1068.28 1104.52 1014.79 1156.86C961.299 1209.2 891.259 1224.89 891.259 1224.89C891.259 1224.89 986.669 1220.78 1045.41 1176.62C1104.14 1132.47 1126.2 1048.27 1126.2 1048.27L1105.21 1015.53Z",
+      fill: "#AA7872"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M894.299 1217.06C894.299 1217.06 938.869 1186.77 976.319 1143.04C1013.78 1099.31 1044.11 1042.16 1044.11 1042.16C1044.11 1042.16 956.419 1125.53 890.419 1163.43C824.419 1201.32 780.109 1193.73 780.109 1193.73L894.299 1217.06Z",
+      fill: "#AA7872"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M780.441 1189.96L923.621 1073.9L669.431 1211.94L520.841 1262.81C520.841 1262.81 627.271 1244.49 692.171 1226.28C757.071 1208.07 780.441 1189.96 780.441 1189.96Z",
+      fill: "#AA7872"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M1409.16 1373.65L1341.39 1476.14C1341.39 1476.14 1364.37 1587.09 1412.11 1596.14C1445.54 1602.47 1498.65 1599.94 1533.92 1502.7C1562.96 1422.65 1500.7 1372.53 1500.7 1372.53L1460.69 1364.11L1409.16 1373.65Z",
+      fill: "#E7BFA7"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M452.362 1400.49C452.362 1400.49 409.772 1354.66 384.692 1350.36C359.602 1346.07 343.932 1368.64 340.102 1381.25C332.942 1404.82 355.232 1416.99 355.232 1416.99C355.232 1416.99 371.552 1394.64 408.532 1435.14C430.452 1459.15 452.832 1499.52 452.832 1499.52C452.832 1499.52 440.392 1460.67 440.272 1435.91C440.152 1411.15 452.362 1400.49 452.362 1400.49Z",
+      fill: "#D0988E"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M1489.11 1428.27C1482.29 1414.49 1453.78 1423.94 1433.4 1441.59C1413.02 1459.25 1403.5 1479.3 1400.76 1494.52C1398.03 1509.75 1415.3 1494.21 1422.46 1502.5C1432.2 1513.77 1416.86 1531.5 1426.41 1530.06C1435.97 1528.61 1438.5 1523.64 1460.97 1503.78C1483.41 1483.94 1495.92 1442.05 1489.11 1428.27Z",
+      fill: "#D0988E"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M775.882 1735.44C775.882 1735.44 838.452 1837.46 885.572 1838.98C932.682 1840.49 964.332 1741.48 964.332 1741.48L867.822 1741.1L775.882 1735.44Z",
+      fill: "#AA7872"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M1223.83 1422.8C1212.45 1421.6 1192.89 1429.79 1192.89 1429.79L1117.61 1468.47C1117.61 1468.47 1066.3 1470.26 1070.25 1494.59C1074.21 1518.91 1089.06 1526.26 1135.06 1519.69C1182.13 1512.97 1208.57 1497.49 1234.36 1469.36C1263.33 1437.75 1235.22 1424 1223.83 1422.8Z",
+      fill: "#D0988E"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M591.262 1417.34C602.652 1416.14 623.002 1416.04 623.002 1416.04C623.002 1416.04 663.882 1418.81 695.902 1430.35C727.912 1441.9 733.922 1453.71 733.922 1453.71C733.922 1453.71 725.642 1487.3 682.832 1469.22C659.292 1459.27 588.742 1500.53 567.952 1464.24C546.642 1427.04 579.882 1418.54 591.262 1417.34Z",
+      fill: "#D0988E"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M928.331 1479.56C929.471 1465.99 914.261 1453.1 891.501 1456.97C861.461 1462.08 854.201 1468.85 852.861 1482.7C851.521 1496.55 868.061 1510.17 889.351 1509.56C910.641 1508.95 927.191 1493.13 928.331 1479.56Z",
+      fill: "#D0988E"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M896.82 1697.52C905.25 1678.21 877.22 1669.23 849.31 1662.52C821.4 1655.81 788.64 1662.99 789.77 1682.22C790.93 1702 812.87 1684.01 843.74 1689.57C884.46 1696.9 886.83 1720.41 896.82 1697.52Z",
+      fill: "#D0988E"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M793.661 1882.99C793.661 1882.99 790.021 1913.33 802.491 1942.62C814.961 1971.91 814.351 1966.85 843.551 2000.14C894.581 2058.32 924.651 2061.87 924.651 2061.87C924.651 2061.87 962.481 2053.64 980.161 2018.51C987.501 2003.93 988.08 1978.34 986.26 1956.91C982.06 1907.51 924.191 1853.39 924.191 1853.39L924.911 1905.77L916.38 1944.36L860.091 1925.73L793.661 1882.99Z",
+      fill: "#C52430"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M793.932 1882.23C793.932 1882.23 801.242 1852.56 799.892 1829C798.532 1805.43 788.522 1787.97 788.522 1787.97C788.522 1787.97 725.262 1749.06 688.812 1766.25C652.352 1783.43 642.692 1856.71 642.692 1856.71L706.102 1881.32C706.102 1881.32 746.692 1891.65 768.652 1891.87C790.612 1892.1 793.932 1882.23 793.932 1882.23Z",
+      fill: "#C52430"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M1264.87 2405.59L1238.58 2366.46L1215.96 2337.53C1215.96 2337.53 1176.4 2366.25 1148.54 2400.32C1120.68 2434.39 1100.07 2472.86 1100.07 2472.86L1150.92 2522.96C1150.92 2522.96 1170.94 2484.64 1198.29 2455.32C1225.63 2426 1264.87 2405.59 1264.87 2405.59Z",
+      fill: "#C52430"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M361.48 1613.57L322.021 1574.84L296.08 1556.94C296.08 1556.94 285.4 1624.62 262.1 1662.89C238.81 1701.17 202.91 1710.03 202.91 1710.03C202.91 1710.03 206.931 1732.13 212.781 1754.97C218.621 1777.8 229.95 1799.91 229.95 1799.91C229.95 1799.91 282.56 1761.18 313.62 1714.78C344.68 1668.37 361.48 1613.57 361.48 1613.57Z",
+      fill: "#C52430"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M895.21 2415.3L894.1 2380.6L921.68 2358.63C921.68 2358.63 914.09 2343.59 860.99 2315.31C807.88 2287.03 746.87 2263.33 709.27 2245.51C679.15 2231.24 677.87 2198.19 677.87 2198.19L670.13 2167.18C670.13 2167.18 625.73 2152.55 595.45 2146.08C565.17 2139.61 549 2141.31 549 2141.31C549 2141.31 497.48 2158.42 471.54 2142.14C445.61 2125.86 433.53 2086.06 433.53 2086.06L371.34 2209.44C371.34 2209.44 392.02 2220.01 423.09 2219.87C450.89 2219.76 488.04 2214.31 538.62 2212.23C582.75 2210.41 711.94 2284.48 711.94 2284.48L895.21 2415.3Z",
+      fill: "#C52430"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M613.281 1831.37L589.011 1824.44L555.381 1807.14L493.811 1932.66L411.971 2012.46L451.991 2055.93L539.461 1925.46L613.281 1831.37Z",
+      fill: "#393939"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M1056.12 2111.16L1032.59 2087.72L1012.45 2067.57C1012.45 2067.57 939.901 2124.11 906.861 2187.47C873.821 2250.83 880.291 2321.02 880.291 2321.02L916.331 2347.15C916.331 2347.15 915.111 2264.31 951.931 2207.45C988.751 2150.59 1056.12 2111.16 1056.12 2111.16Z",
+      fill: "#393939"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M397.973 2000.31C397.973 2000.31 415.203 1949.79 369.593 1911.72C338.453 1885.71 275.733 1893.29 275.733 1893.29C275.733 1893.29 304.863 1938 335.903 1964.12C366.953 1990.25 397.973 2000.31 397.973 2000.31Z",
+      fill: "#393939"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M1431.28 1208.29C1431.28 1208.29 1465.22 1242.52 1439.69 1313.49C1414.16 1384.45 1329.16 1492.15 1329.16 1492.15C1329.16 1492.15 1342.51 1389.58 1322.93 1312.61C1303.36 1235.64 1250.87 1184.26 1250.87 1184.26L1144.48 1054.72L1103.39 1011.98L1065.34 1087.16L1007.7 1164.85L900.789 1215.66L979.379 1140.28L1042.41 1042.71L931.759 1141.29L848.489 1181.76L780.799 1188.65L932.349 1064.25L669.739 1219.71L517.709 1262.59L497.419 1320.51L487.189 1392.42L461.759 1372.55L402.699 1288.13L393.999 1216.4L427.549 1152.55L481.259 1109.11L490.129 1148.84L522.939 1157.51L552.609 1120.03L560.209 1095.96L590.669 1107.21L619.109 1100.37L629.669 1076.73L636.789 1046.46L666.789 1064.81L698.559 1057.58L710.629 1013.35C710.629 1013.35 743.699 1043.33 777.919 1027.92C812.599 1012.3 822.179 976.411 822.179 976.411C822.179 976.411 844.189 1008.01 876.309 996.501C900.199 987.941 920.689 960.301 920.689 960.301C920.689 960.301 937.069 1003.94 966.439 1006.79C995.809 1009.64 1032.87 970.131 1032.87 970.131C1032.87 970.131 1024.87 1003.67 1058.41 1013.76C1078.59 1019.83 1110.13 988.721 1110.13 988.721C1110.13 988.721 1129.53 1047.14 1157.23 1051.68C1170.27 1053.82 1173.22 1051.53 1180.34 1049.24C1198.61 1043.33 1207.77 1026.23 1207.77 1026.23L1242.75 1082.61L1289.67 1079.88L1334.53 1144.81L1372.11 1146.09L1381.8 1182.81L1407.86 1205.28L1431.28 1208.29Z",
+      fill: "#4D3836"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M841.402 1996.55L824.852 1978.97L813.152 1952.73C813.152 1952.73 766.952 1987.81 733.032 2037.45C699.102 2087.09 677.452 2151.3 677.452 2151.3C677.452 2151.3 672.512 2183.88 676.502 2204.68C680.492 2225.48 680.922 2246.32 700.272 2220.06C719.612 2193.8 716.352 2157.38 753.872 2099.64C791.392 2041.9 841.402 1996.55 841.402 1996.55Z",
+      fill: "#393939"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M717.441 1888.1L699.831 1875.71L677.931 1865.07C677.931 1865.07 645.381 1894.87 609.601 1946.3C577.641 1992.24 524.741 2087.2 513.431 2129.24C502.111 2171.28 549.341 2141.23 549.341 2141.23C549.341 2141.23 585.231 2075.13 618.151 2008.29C651.721 1940.14 717.441 1888.1 717.441 1888.1Z",
+      fill: "#393939"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M289.151 1553.75L133.271 1542.19C133.271 1542.19 73.7812 1529.5 52.5512 1534.01C31.3212 1538.51 48.351 1560.21 48.351 1560.21C48.351 1560.21 14.381 1580.56 9.37103 1593.35C4.36103 1606.14 32.0612 1608.62 32.0612 1608.62L128.141 1602.98L157.991 1621.36L146.931 1670.15L171.161 1676.42L227.591 1645.48L184.621 1678.95L201.601 1710.67C201.601 1710.67 250.511 1687.57 272.661 1649.3C294.821 1611.03 289.151 1553.75 289.151 1553.75Z",
+      fill: "#E7BFA7"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M1267.98 2409.73L1202.7 2449.47L1151 2521.62L1213.23 2577.49C1213.23 2577.49 1212.74 2550.22 1235.99 2557.6C1259.24 2564.99 1283.84 2623.45 1306.21 2607.02C1328.58 2590.6 1318.42 2489.03 1318.42 2489.03L1267.98 2409.73Z",
+      fill: "#E7BFA7"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M900.762 2500.04L894.402 2422.04C894.402 2422.04 744.472 2287.85 624.582 2238.89C504.702 2189.92 414.862 2226.17 414.862 2226.17C414.862 2226.17 330.362 2248.79 311.442 2312.84C288.902 2389.1 332.812 2480.39 332.812 2480.39L418.322 2638.12L500.362 2598.83L592.812 2530.08L591.072 2563.01L592.232 2635.23C592.232 2635.23 670.232 2667.15 736.092 2650.83C801.962 2634.51 855.692 2569.94 855.692 2569.94L900.762 2500.04Z",
+      fill: "#4A4A4A"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M609.909 2529.82L534.729 2620.91L501.319 2663.05C501.319 2663.05 633.299 2846.1 727.379 2925.54C821.459 3004.98 877.619 2980.79 877.619 2980.79C877.619 2980.79 911.999 2939.08 932.969 2884.02C953.949 2828.97 961.539 2760.57 961.539 2760.57C961.539 2760.57 894.069 2718.53 867.099 2673.44C840.119 2628.35 853.639 2580.2 853.639 2580.2C853.639 2580.2 809.119 2641.56 683.179 2654.3C617.529 2660.93 606.419 2637.28 606.419 2637.28L609.909 2529.82Z",
+      fill: "#4A4A4A"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M606.609 2528.87L568.849 2540.18L492.199 2606.12L431.349 2628.35L407.899 2685.62L426.359 2709.3L459.429 2700.34L510.369 2650.57L606.609 2528.87Z",
+      fill: "#272727"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M959.389 2771.17C959.389 2771.17 948.709 2843.48 927.199 2894.17C905.699 2944.87 873.529 2985.33 873.529 2985.33L917.179 3013.93L942.849 2995.32C942.849 2995.32 965.989 2919.56 970.169 2866.37C974.349 2813.17 959.389 2771.17 959.389 2771.17Z",
+      fill: "#272727"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M1217.82 2339.65L1057.53 2112.7L955.16 2203.17L923.52 2275.62L920.25 2348.38L1006.74 2404.72L1098 2468.2L1156.72 2383.3L1217.82 2339.65Z",
+      fill: "white"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M551.973 1801.88C551.973 1801.88 512.063 1760.56 464.853 1714.29C417.643 1668.01 363.143 1616.79 363.143 1616.79C363.143 1616.79 341.013 1680.53 308.073 1726.09C275.123 1771.64 231.363 1799 231.363 1799L281.513 1890.04C281.513 1890.04 327.653 1880.25 362.013 1904.37C410.063 1938.08 404.583 2004.25 404.583 2004.25C404.583 2004.25 460.033 1979.4 496.883 1928.81C533.733 1878.22 551.973 1801.88 551.973 1801.88Z",
+      fill: "white"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M1015.85 2073.1L989.852 1988.97C989.852 1988.97 987.742 2009.03 971.492 2027.69C955.232 2046.35 924.832 2063.61 924.832 2063.61L836.712 1998.3C836.712 1998.3 802.201 2015.03 766.131 2071.35C730.051 2127.67 692.422 2223.58 692.422 2223.58C692.422 2223.58 685.061 2240.77 798.901 2287.07C825.871 2298.04 875.342 2317.98 875.342 2317.98C875.342 2317.98 876.222 2235.2 911.352 2173.98C946.482 2112.76 1015.85 2073.1 1015.85 2073.1Z",
+      fill: "white"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M686.859 1868.73L665.939 1860.78L641.339 1861.27L657.829 1797.61L622.359 1828.7L517.719 1961.66L439.489 2095.35C439.489 2095.35 438.329 2119.71 470.369 2143.08C496.419 2162.08 514.499 2154.94 514.499 2154.94C514.499 2154.94 549.359 2064.22 592.449 1992.67C635.539 1921.11 686.859 1868.73 686.859 1868.73Z",
+      fill: "white"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M803.633 1951.25L791.493 1890.33L719.263 1889.58L656.183 1953.13L618.703 2005.45L593.603 2063.88L546.553 2138.3L595.903 2145.33L673.643 2166.65C673.643 2166.65 702.363 2087.34 734.863 2033.49C767.353 1979.64 803.633 1951.25 803.633 1951.25Z",
+      fill: "white"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M407.422 2224.09L375.592 2237.96L348.352 2256.94L358.422 2228.25L364.902 2210.9L386.182 2220.25L407.422 2224.09Z",
+      fill: "white"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M1223.69 1329.65C1223.69 1329.65 1176.24 1267.12 1120.75 1265.05C1097.25 1264.17 1064.97 1271.01 1042.35 1286.01C1011.56 1306.42 993.661 1336.89 993.661 1336.89L1003.95 1277.76C1003.95 1277.76 1074.84 1224.76 1144.64 1247.31C1195.3 1263.67 1223.69 1329.65 1223.69 1329.65Z",
+      fill: "#AA7872"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M804.902 1337.66L806.902 1281.88C806.902 1281.88 746.072 1220.77 709.152 1222.36C613.722 1226.46 572.072 1292.18 572.072 1292.18C572.072 1292.18 649.562 1236.47 705.262 1244.06C760.952 1251.65 804.902 1337.66 804.902 1337.66Z",
+      fill: "#AA7872"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M159.919 1621.27L190.539 1601.39C190.539 1601.39 171.379 1580.84 126.669 1581.74C81.9489 1582.65 11.679 1605.02 11.679 1605.02C11.679 1605.02 71.0789 1599.33 108.149 1603.39C145.209 1607.45 159.919 1621.27 159.919 1621.27Z",
+      fill: "#B18079"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M137.039 1542.98L89.259 1553.68L47.1189 1563.92C47.1189 1563.92 36.2789 1546.66 45.3989 1538.2C54.5089 1529.74 60.6689 1528.89 83.5789 1530.09C106.499 1531.29 137.039 1542.98 137.039 1542.98Z",
+      fill: "#B18079"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M343.281 2265.17C326.891 2284.67 296.051 2340.92 304.721 2378.6C314.871 2422.7 332.271 2470.18 332.271 2470.18C332.271 2470.18 386.691 2482.64 393.071 2433.85C396.281 2409.38 394.711 2377.94 389.141 2345.11C383.621 2312.47 360.651 2244.51 343.281 2265.17Z",
+      fill: "#7C7C7C"
+    }), m("path", {
+      d: "M870.822 2126.48C870.822 2126.48 904.512 2097.66 872.872 2072.24C842.582 2047.91 816.662 2071.2 806.442 2094.28C797.742 2113.9 840.722 2137.89 832.682 2155.63C826.512 2169.23 796.142 2152.62 775.392 2169.22C754.652 2185.81 748.842 2220.25 781.202 2238.51C805.602 2252.27 828.922 2223.98 816.052 2211.95",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M511.083 2026.33C511.083 2026.33 490.683 2045.04 509.843 2061.54C528.193 2077.34 543.893 2062.22 550.083 2047.24C555.353 2034.5 529.313 2018.92 534.193 2007.4C537.923 1998.57 556.323 2009.36 568.883 1998.58C581.453 1987.81 584.973 1965.45 565.373 1953.6C550.593 1944.66 536.473 1963.03 544.263 1970.84",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M1281.64 687.72C1281.64 687.72 1238.72 581.324 1162.99 621.983C1057.54 678.598 1123.99 764.091 1140.49 777.157C1162.6 794.67 1217.96 817.97 1260.52 764.15C1270.93 750.976 1270.46 724.487 1257.89 705.403C1239.09 676.843 1207.39 657.797 1178.63 674.977C1149.88 692.157 1144.52 716.819 1158.63 735.831C1173.47 755.821 1208.07 757.153 1212.5 723.742C1215.69 699.71 1193.14 708.999 1193.14 708.999",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M681.584 469.604C662.274 443.211 635.884 347.293 706.054 322.831C788.964 293.926 817.824 375.814 809.044 407.805C798.104 447.717 754.614 461.857 733.734 454.154C667.424 429.692 697.314 365.056 718.924 360.812C754.974 353.731 763.984 389.78 763.984 389.78",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M698.965 179.275C698.965 179.275 744.555 182.295 756.145 217.057C767.735 251.819 744.305 269.321 731.805 268.112C711.845 266.181 709.965 256.07 709.475 247.862C708.995 239.654 721.075 224.84 729.865 235.281",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M712.473 208.323C712.473 208.323 691.573 207.77 683.733 231.587C675.883 255.403 689.033 270.838 689.033 270.838",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M605.523 1009.8C605.523 1009.8 615.023 979.471 593.053 958.371C568.763 935.051 544.333 955.411 544.333 955.411",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M586.105 978.491C586.105 978.491 550.985 959.061 542.875 995.831C540.075 1008.48 542.985 1017.7 557.905 1019.46C570.755 1020.98 571.455 1005.91 571.455 1005.91",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M734.835 652.558C734.835 652.558 695.635 648.625 699.505 692.425C702.755 729.032 739.445 731.979 739.445 731.979",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M751.825 628.674C751.825 628.674 787.665 650.522 780.015 683.512C772.855 714.403 748.715 712.956 736.025 707.842C722.085 702.22 714.925 696.457 717.665 683.758C721.325 666.761 744.775 669.776 745.205 681.844",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M817.686 696.793C817.686 696.793 823.986 656.591 807.046 634.22C789.036 610.433 770.126 615.559 770.126 615.559",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M744.234 877.241C744.234 877.241 707.044 931.121 658.924 883.091C638.794 862.991 645.854 821.831 667.694 808.401C687.874 795.991 711.294 798.141 729.004 817.471C741.834 831.461 742.014 866.221 716.564 878.591C691.104 890.971 671.644 869.421 668.614 854.931C662.584 826.131 685.234 811.691 703.964 822.121",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M702.673 865.211C702.673 865.211 713.773 859.961 709.193 847.441C704.613 834.911 689.823 839.131 689.823 839.131",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M962.513 905.01C962.513 905.01 951.873 867.31 973.613 846.66C987.583 833.38 1016.04 849.54 1016.04 849.54",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M987.445 808.83C987.445 808.83 1025.69 814.42 1039.17 844.68C1056.01 882.51 1025.19 907.76 1007.04 907.63C980.955 907.44 974.395 890.17 979.505 878.53C983.995 868.32 990.735 867.48 996.895 868.7C1004.24 870.15 1006.95 878.8 1006.95 878.8",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M897.265 465.656C897.265 465.656 959.465 434.842 975.485 485.415C987.845 524.442 963.185 538.518 942.635 540.306C915.965 542.624 911.105 519.615 908.785 508.023C906.465 496.431 916.175 480.955 927.765 480.65C941.135 480.297 947.595 488.062 946.735 498.08C945.885 508.099 933.755 508.614 933.755 508.614",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M1383.56 949.59C1383.56 949.59 1385.4 980.36 1349.81 993.18C1307.73 1008.33 1285.32 987.2 1285.32 987.2",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M1383.68 913.36C1383.68 913.36 1390.36 857.97 1341.83 859.53C1272.32 861.78 1281.37 929.15 1284.66 936.22C1295.53 959.52 1328.87 984.77 1349.23 962.13C1370.62 938.34 1353.8 912.28 1344.38 911.29C1317.45 908.43 1330.47 934.86 1330.47 934.86",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M1412.07 1379.7C1412.07 1379.7 1471.32 1343.39 1508.7 1379.37C1575.93 1444.12 1511.77 1549.85 1496.71 1569.19C1478.35 1592.78 1436.22 1612.82 1396.59 1589.57C1356.95 1566.33 1341.45 1489.32 1341.45 1489.32",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M1465.86 1462.39C1465.86 1462.39 1464.78 1485 1454.59 1501.6C1444.39 1518.19 1425.06 1528.76 1425.06 1528.76",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M1478.66 1426.49C1478.66 1426.49 1456.3 1426.02 1437.14 1443.69C1417.99 1461.35 1402.05 1497.15 1402.05 1497.15",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M419.293 1312.63C419.293 1312.63 340.333 1273.2 323.173 1326.69C292.553 1422.11 336.703 1493.32 380.853 1533.9C437.233 1585.74 514.723 1569.51 514.723 1569.51",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M448.492 1397.18C448.492 1397.18 414.852 1361.76 391.532 1354.46C368.212 1347.16 355.212 1367.99 355.212 1367.99",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M454.902 1501.15C454.902 1501.15 421.612 1447.21 397.222 1425.67C372.842 1404.13 357.352 1414.99 357.352 1414.99",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M1160.99 1674.8C1152.36 1680.24 1039.66 1735.77 862.143 1740.03C819.263 1741.06 681.043 1735.19 531.333 1579.52C431.133 1475.32 517.343 1259.84 517.343 1259.84C517.343 1259.84 585.023 1251.54 685.193 1207.15C736.593 1184.37 799.823 1148.76 849.713 1117.1C899.593 1085.43 1022.15 996.211 1022.15 996.211C1022.15 996.211 907.673 1095.69 867.213 1127.04C826.753 1158.39 771.873 1190.69 771.873 1190.69C771.873 1190.69 832.893 1197.01 898.083 1160.33C963.273 1123.66 1059.07 1021.52 1059.07 1021.52C1059.07 1021.52 1014.96 1096.12 979.883 1139.96C944.803 1183.8 887.853 1220.88 887.853 1220.88C887.853 1220.88 961.553 1206.17 1012.19 1154.94C1062.83 1103.71 1104.88 1011.69 1104.88 1011.69C1104.88 1011.69 1218.42 1140.76 1291.23 1246.37C1358.43 1343.83 1334.69 1436.29 1320.9 1481.81C1296.79 1561.38 1250.2 1618.52 1160.99 1674.8Z",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M1299.44 1535.57C1299.44 1535.57 1384.9 1412.3 1421.39 1352.25C1468.7 1274.42 1435.31 1210.22 1435.31 1210.22C1435.31 1210.22 1410.29 1214.23 1393.88 1197.25C1377.48 1180.28 1369.68 1142.32 1369.68 1142.32C1369.68 1142.32 1338.25 1148.29 1317.79 1130.9C1297.32 1113.51 1287.83 1072.76 1287.83 1072.76C1287.83 1072.76 1256.49 1095.48 1236.25 1084.61C1216.01 1073.74 1206.86 1029.27 1206.86 1029.27C1206.86 1029.27 1196.12 1045.68 1180.6 1051C1165.08 1056.31 1144.78 1050.54 1144.78 1050.54C1144.78 1050.54 1194.14 1113.09 1272.49 1217.34C1400.06 1387.09 1299.44 1535.57 1299.44 1535.57Z",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M1434.43 1212.59C1434.43 1212.59 1433.91 1253.4 1420.7 1293.78C1407.48 1334.16 1381.57 1374.12 1381.57 1374.12",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M1392.67 1275.33C1392.67 1275.33 1394.62 1245.41 1364.5 1200.03C1334.39 1154.66 1275.72 1086.04 1275.72 1086.04",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M1367.66 1320.79C1367.66 1320.79 1369.31 1262.63 1322.56 1196.33C1275.8 1130.03 1180.65 1055.59 1180.65 1055.59",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M936.973 1000.76C936.973 1000.76 841.303 1044.65 713.143 1068.3C540.073 1100.23 429.353 1259.73 429.353 1259.73L481.793 1255.72C481.793 1255.72 617.633 1171.63 738.153 1146.16C844.283 1123.73 886.523 1092.47 886.523 1092.47",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M480.484 1256.64L516.574 1259.84",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M1202.38 1211.37C1202.38 1211.37 1160.43 1169.94 1124.58 1156.27C1088.72 1142.61 1056.03 1158.8 1056.03 1158.8",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M1237.96 1427.12C1237.96 1427.12 1225.14 1417.31 1189.72 1431.8C1146.74 1449.38 1130.21 1468.83 1092.32 1474.3C1054.43 1479.77 1032.09 1452.1 1032.09 1452.1",
+      stroke: "black",
+      "stroke-width": "7.56",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M1193.88 1427.63C1193.88 1427.63 1209.03 1395.08 1209.77 1365.39C1210.52 1335.71 1196.85 1308.89 1196.85 1308.89",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M1221.22 1330.43C1221.22 1330.43 1174.09 1269.29 1108.29 1266.32C1055.32 1263.93 1008.1 1313.44 1008.1 1313.44",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M1034.98 1455.12C1034.98 1455.12 994.524 1415.65 992.144 1380.29C989.764 1344.95 1005.01 1312.92 1005.01 1312.92",
+      stroke: "black",
+      "stroke-width": "7.56",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M1071.63 1326.48C1071.63 1326.48 1107.78 1332.05 1119.94 1360.78C1127.27 1378.12 1129.26 1412.99 1100.99 1427.73C1086.54 1435.27 1072.02 1434.54 1058.17 1429.77C1044.16 1424.94 1032.97 1412.68 1028.07 1401.14C1019.05 1379.88 1023.42 1355.91 1023.42 1355.91C1023.42 1355.91 1049.96 1385.27 1067.82 1369.46C1082.03 1356.89 1076.94 1338.78 1073.61 1330.68C1072.53 1328.06 1071.63 1326.48 1071.63 1326.48Z",
+      fill: "black",
+      stroke: "black",
+      "stroke-width": "7.56",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M996.005 1342.15C996.005 1342.15 999.365 1334.08 1002.48 1326.26C1005.59 1318.43 1013.64 1311.89 1013.64 1311.89",
+      stroke: "black",
+      "stroke-width": "7.56",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M725.394 1307.64C725.394 1307.64 724.894 1332.46 713.914 1336.91C702.924 1341.36 682.925 1324.39 682.925 1324.39C682.925 1324.39 667.154 1351.22 676.904 1374.53C686.844 1398.3 716.925 1414.69 740.325 1404.53C776.645 1388.75 775.054 1357.87 763.654 1332.99C753.134 1310.05 725.394 1307.64 725.394 1307.64Z",
+      fill: "black",
+      stroke: "black",
+      "stroke-width": "7.56",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M716.735 1439.59C716.735 1439.59 747.955 1442.08 766.855 1428.29C777.295 1420.68 792.155 1399.08 796.755 1382.41C804.715 1353.59 802.275 1325.01 787.825 1298.45C781.265 1286.38 758.875 1249.32 691.845 1246.68C638.245 1244.57 577.905 1296.17 577.905 1296.17",
+      stroke: "black",
+      "stroke-width": "7.56",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M600.005 1279.71C600.005 1279.71 569.255 1320.58 584.685 1368.77C594.835 1400.45 619.355 1412.88 619.355 1412.88",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M731.703 1453.41C731.703 1453.41 711.473 1430.42 675.423 1421.8C639.383 1413.19 589.363 1418.53 589.363 1418.53",
+      stroke: "black",
+      "stroke-width": "7.56",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M969.965 1499.31C969.965 1499.31 962.575 1451.68 895.905 1445.97C852.385 1442.24 818.275 1481.69 818.275 1481.69",
+      stroke: "black",
+      "stroke-width": "7.56",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M961.645 1517.9C961.645 1517.9 949.775 1513.53 936.505 1519.73C923.225 1525.93 908.545 1542.69 908.545 1542.69",
+      stroke: "black",
+      "stroke-width": "7.56",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M858.434 1534.49C858.434 1534.49 854.784 1525.13 845.494 1519.57C836.194 1514.02 821.254 1512.28 821.254 1512.28",
+      stroke: "black",
+      "stroke-width": "7.56",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M1071.99 1584.81C1071.99 1584.81 1062.32 1565.63 1009.33 1581.36C948.582 1599.39 929.082 1612.8 848.152 1589.46C767.212 1566.12 771.492 1522.53 718.432 1496.07C665.382 1469.61 638.742 1483.75 638.742 1483.75",
+      stroke: "black",
+      "stroke-width": "7.56",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M965.105 1594.73C965.105 1594.73 935.615 1614.61 904.125 1634.13C892.975 1641.04 860.545 1661.53 819.585 1634.31C765.955 1598.65 753.155 1576.88 734.145 1533.85C715.965 1492.68 701.125 1488.6 701.125 1488.6",
+      stroke: "black",
+      "stroke-width": "7.56",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M475.026 1109.86C475.026 1109.86 393.646 1168.96 393.196 1232.49C392.716 1302.07 480.176 1388.13 480.176 1388.13",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M967.504 1734.48C967.504 1734.48 940.094 1770.31 929.014 1824.19C917.924 1878.07 921.154 1944.08 921.154 1944.08C921.154 1944.08 884.524 1936.96 854.154 1920.86C823.794 1904.77 799.714 1879.7 799.714 1879.7C799.714 1879.7 801.964 1834.98 796.274 1796.91C790.584 1758.84 777.784 1733.27 777.784 1733.27C777.784 1733.27 820.484 1739.82 867.624 1740.11C914.754 1740.4 967.504 1734.48 967.504 1734.48Z",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M925.884 1857.89C925.884 1857.89 984.084 1903.07 988.024 1982.66C990.574 2034.21 925.864 2064.37 925.864 2064.37C925.864 2064.37 850.884 2017.55 819.154 1971.63C787.414 1925.7 798.924 1880.67 798.924 1880.67",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M796.766 1884.58C796.766 1884.58 760.866 1895.35 731.796 1890.58C702.726 1885.81 701.166 1873.04 680.476 1865.5C659.786 1857.97 640.666 1860.95 640.666 1860.95C640.666 1860.95 648.426 1784.23 686.976 1767.2C725.526 1750.17 794.866 1792.82 794.866 1792.82",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M805.873 1956.22C805.873 1956.22 727.363 2032.82 697.213 2100.19C667.063 2167.56 674.943 2200.15 682.003 2223.52C687.033 2240.17 742.393 2258.03 762.403 2267.52C835.753 2302.29 877.583 2325.65 877.583 2325.65C877.583 2325.65 869.433 2262.09 910.183 2183.31C943.723 2118.47 1018.29 2069.77 1018.29 2069.77C1018.29 2069.77 1009.46 2048.17 1002.53 2024.68C995.613 2001.18 987.163 1974.84 987.163 1974.84",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M795.223 1894.36C795.223 1894.36 697.923 1971.62 648.683 2034.2C599.443 2096.78 598.263 2144.68 598.263 2144.68",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M674.973 2171.04C674.973 2171.04 637.133 2154.86 600.163 2146.53C563.183 2138.2 543.873 2144.14 543.873 2144.14",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M723.633 1890.55C723.633 1890.55 682.493 1915.86 637.533 1979.39C592.583 2042.92 603.363 2053.88 571.033 2108.44C543.083 2155.62 520.513 2150.92 508.473 2151.66C484.893 2153.1 472.063 2144.26 454.183 2126.71C436.313 2109.16 437.623 2085.71 437.623 2085.71C437.623 2085.71 515.923 1959.71 571.713 1884.49C627.503 1809.26 680.733 1770.92 680.733 1770.92",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M613.625 1829.55C613.625 1829.55 565.865 1825.22 523.455 1776.66C426.965 1666.17 294.485 1550.86 294.485 1550.86C294.485 1550.86 301.035 1600.6 267.315 1651.94C229.565 1709.39 199.385 1710.91 199.385 1710.91C199.385 1710.91 223.245 1813.91 286.445 1907.07C338.575 1983.89 371.785 1979.53 412.485 2018.14C453.185 2056.74 449.255 2061.5 449.255 2061.5",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M361.992 1612.18C361.992 1612.18 348.132 1667.35 313.752 1714.91C279.382 1762.47 229.742 1801.83 229.742 1801.83",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M553.016 1812.14C553.016 1812.14 538.516 1870.02 503.376 1919.52C468.236 1969.03 412.456 2010.15 412.456 2010.15",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M397.196 2005.57C397.196 2005.57 417.996 1960.44 373.936 1916.8C345.146 1888.29 280.486 1893.06 280.486 1893.06",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M229.383 1647.54C229.383 1647.54 168.673 1694.35 149.103 1670.02C130.153 1646.48 188.613 1606.29 188.613 1606.29",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M293.516 1551.01C293.516 1551.01 220.386 1543.3 149.166 1547.11C76.8755 1550.99 -2.86441 1576.64 9.22559 1603.98C15.1556 1617.4 80.7254 1600.02 118.085 1604.54C155.435 1609.05 158.656 1622.04 158.656 1622.04",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M145.383 1546.36C145.383 1546.36 78.0828 1523.48 51.6628 1533.67C28.5228 1542.6 49.6428 1561.14 49.6428 1561.14",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M198.285 1708.29C198.285 1708.29 196.315 1697.08 192.185 1689.24C188.065 1681.39 181.785 1676.92 181.785 1676.92",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M1019.05 2070.44C1019.05 2070.44 1033.38 2081.34 1083.55 2148.4C1133.71 2215.46 1160.32 2249.81 1219.7 2338.67C1279.09 2427.53 1291.99 2441.13 1308.62 2471.03C1342.71 2532.33 1316.64 2599.51 1304.61 2606.1C1275.99 2621.77 1261.95 2568.67 1238.11 2560.81C1214.27 2552.94 1228.83 2585.84 1204.42 2573.8C1180.01 2561.76 1161.8 2531.7 1138.55 2511.22C1089.78 2468.29 1026.71 2417.57 969.683 2387.2C899.123 2349.62 878.193 2325.57 878.193 2325.57",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M1264.32 2408.89C1264.32 2408.89 1229.28 2423.5 1201.42 2451.32C1173.55 2479.15 1150.86 2520.21 1150.86 2520.21",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M1218.18 2339.84C1218.18 2339.84 1183.11 2360.99 1153.92 2394.42C1124.72 2427.86 1101.39 2473.57 1101.39 2473.57",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M1054.34 2112.95C1054.34 2112.95 985.466 2152.95 950.766 2212.35C916.056 2271.74 915.516 2350.51 915.516 2350.51",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M433.763 2083.2L368.883 2207.62C368.883 2207.62 380.803 2226.67 423.663 2221.64C501.363 2212.52 514.463 2195.65 633.003 2246.11C751.553 2296.58 897.843 2423.51 897.843 2423.51C897.843 2423.51 890.323 2398.61 896.043 2382.19C901.763 2365.77 920.723 2357.81 920.723 2357.81",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M368.056 2208.29L339.005 2267.76C339.005 2267.76 289.445 2322.2 309.465 2413.53C329.485 2504.87 419.105 2633.1 419.105 2633.1",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M336.504 2270.11C336.504 2270.11 360.194 2247.81 379.504 2237.49C398.814 2227.17 416.984 2224.73 416.984 2224.73",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M896.564 2422.1C896.564 2422.1 918.674 2499 881.864 2539.53C826.244 2600.76 855.004 2664.72 883.924 2699.84C912.844 2734.97 956.974 2748.28 964.764 2776.41C982.864 2841.69 958.314 2945.71 950.764 2968.28C943.214 2990.85 940.164 3003.53 923.624 3010.39C907.084 3017.25 910.554 2997.49 883.504 2990.17C856.454 2982.84 828.414 2995.57 756.174 2947.59C673.804 2892.88 566.354 2753.82 566.354 2753.82L500.744 2660.47C500.744 2660.47 555.814 2590.63 589.984 2552.99C624.164 2515.34 631.914 2521.17 634.544 2499.22C637.144 2477.6 615.254 2446.53 612.014 2417.58C608.764 2388.62 616.874 2388.91 626.644 2384.51C636.404 2380.1 651.064 2399.95 651.064 2399.95",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M958.605 2768.62C958.605 2768.62 950.835 2839.6 929.405 2894.12C907.975 2948.65 873.335 2985.92 873.335 2985.92",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M851.613 2574.72C851.613 2574.72 795.073 2636.34 731.263 2652.06C667.453 2667.79 596.373 2637.62 596.373 2637.62",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M856.365 2438.75C856.365 2438.75 858.935 2518.52 818.945 2522.72C780.705 2526.73 770.435 2500.14 753.735 2484.44C728.315 2460.53 703.595 2448.88 703.595 2448.88",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M578.133 2347.13C578.133 2347.13 553.873 2357.16 548.353 2377.85C542.823 2398.55 552.443 2423.44 552.443 2423.44",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M577.062 2450.35C577.062 2450.35 531.783 2486.23 481.062 2501.7C430.353 2517.16 374.203 2512.21 374.203 2512.21",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M590.863 2478.32C590.863 2478.32 546.353 2514.95 501.283 2532.99C456.213 2551.03 408.593 2550.27 408.593 2550.27",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M606.766 2529.76C606.766 2529.76 595.956 2526.13 568.336 2543.61C540.716 2561.09 526.536 2581.38 496.276 2599.68C466.016 2617.97 448.816 2609.43 433.166 2629.18C417.516 2648.94 400.256 2685.09 416.986 2701.02C432.886 2716.18 451.546 2704.57 463.496 2692.45C481.236 2674.46 502.736 2656.15 502.736 2656.15",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M908.504 2827.41C908.504 2827.41 890.154 2801.51 865.314 2779.78C840.474 2758.06 823.914 2753.61 808.344 2728.61C792.764 2703.61 803.004 2679.79 803.004 2679.79",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M867.684 2818.97C867.684 2818.97 852.224 2851.89 826.764 2877.73C801.314 2903.57 765.854 2922.33 765.854 2922.33",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M845.223 2794.97C845.223 2794.97 826.993 2829.97 802.153 2854.96C777.313 2879.96 745.853 2894.96 745.853 2894.96",
+      stroke: "black",
+      "stroke-width": "14.77",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M795.273 1318.21L786.063 1301.21C786.063 1301.21 753.153 1246.04 700.073 1244.76C646.993 1243.49 572.193 1296.17 572.193 1296.17",
+      stroke: "black",
+      "stroke-width": "13.7",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M791.223 1318.33C793.203 1322.39 797.533 1327.26 799.463 1335.79C801.393 1344.31 800.983 1355.47 800.983 1355.47",
+      stroke: "black",
+      "stroke-width": "6.16",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }), m("path", {
+      d: "M801.774 1345.38C801.774 1345.38 802.294 1332.35 801.104 1326.1C799.994 1320.24 798.784 1317 798.784 1317",
+      stroke: "black",
+      "stroke-width": "6.16",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }));
+    var gugutaNode = m("div", gugutaAttrs, svgGuguta);
+    return m(flarum_components_Tooltip__WEBPACK_IMPORTED_MODULE_3___default.a, {
+      text: info
+    }, gugutaNode);
+  };
+
+  return GugutaRight;
+}(flarum_Component__WEBPACK_IMPORTED_MODULE_4___default.a);
+
+
+
+/***/ }),
+
+/***/ "./src/common/components/InlineArticleView.js":
+/*!****************************************************!*\
+  !*** ./src/common/components/InlineArticleView.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return InlineArticleView; });
+/* harmony import */ var _babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inheritsLoose */ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js");
+/* harmony import */ var flarum_extensions_afrux_forum_widgets_core_common_components_Widget__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/extensions/afrux-forum-widgets-core/common/components/Widget */ "flarum/extensions/afrux-forum-widgets-core/common/components/Widget");
+/* harmony import */ var flarum_extensions_afrux_forum_widgets_core_common_components_Widget__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_extensions_afrux_forum_widgets_core_common_components_Widget__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var flarum_app__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/app */ "flarum/app");
+/* harmony import */ var flarum_app__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_app__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var flarum_common_components_Placeholder__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/common/components/Placeholder */ "flarum/common/components/Placeholder");
+/* harmony import */ var flarum_common_components_Placeholder__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_common_components_Placeholder__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var flarum_common_models_Discussion__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! flarum/common/models/Discussion */ "flarum/common/models/Discussion");
+/* harmony import */ var flarum_common_models_Discussion__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(flarum_common_models_Discussion__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var flarum_components_Button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! flarum/components/Button */ "flarum/components/Button");
+/* harmony import */ var flarum_components_Button__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(flarum_components_Button__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _GugutaRight__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./GugutaRight */ "./src/common/components/GugutaRight.js");
+
+
+
+
+
+
+ // import 
+// TODO: change into latest articles
+
+var InlineArticleView = /*#__PURE__*/function (_Widget) {
+  Object(_babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__["default"])(InlineArticleView, _Widget);
+
+  function InlineArticleView() {
+    return _Widget.apply(this, arguments) || this;
+  }
+
+  var _proto = InlineArticleView.prototype;
+
+  _proto.oninit = function oninit(vnode) {
+    _Widget.prototype.oninit.call(this, vnode);
+
+    this.discussion;
+    this.stream;
+    this.near = 0;
+    this.useBrowserScrollRestoration = true; // this.load();
+  };
+
+  _proto.className = function className() {
+    return 'InlineArticleView';
+  };
+
+  _proto.icon = function icon() {
+    return 'fas fa-cirlce';
+  } // title() {
+  //   return app.translator.trans('InlineArticle');
+  // }
+  ;
+
+  _proto.content = function content() {
+    var _this = this;
+
+    // TODO replace 'core.forum.discussion_list.empty_text'
+    var text = flarum_app__WEBPACK_IMPORTED_MODULE_2___default.a.translator.trans('core.forum.discussion_list.empty_text');
+    this.discussion = flarum_app__WEBPACK_IMPORTED_MODULE_2___default.a.discussion; // this.load();
+    // return (
+    //   <div className="Tudor-InlineArticleViewWidget">
+    //     {/* {this.discussion ? this.discussionPage() : Placeholder.component({ text })} */}
+    //   </div>
+    // );
+
+    var slideUp = function slideUp() {
+      _this.$().slideUp(_this.hide.bind(_this));
+    };
+
+    return m("div", {
+      className: "Tudor-InlineArticleViewWidget"
+    }, m("div", {
+      "class": "container"
+    }, flarum_components_Button__WEBPACK_IMPORTED_MODULE_5___default.a.component({
+      icon: 'fas fa-times rounded-full px-4 py-3 hover:bg-blue-100',
+      onclick: slideUp,
+      className: 'Hero-close Button Button--icon Button--link'
+    }), m("div", {
+      className: "containerNarrow"
+    }, m("h2", {
+      className: "Hero-title",
+      "class": "text-3xl leading-9 font-bold tracking-tight text-blue sm:text-4xl sm:leading-10"
+    }, flarum_app__WEBPACK_IMPORTED_MODULE_2___default.a.forum.attribute("welcomeTitle")), m("div", {
+      className: "Hero-subtitle",
+      "class": "text-lg mt-2 mb-4"
+    }, m.trust(flarum_app__WEBPACK_IMPORTED_MODULE_2___default.a.forum.attribute("welcomeMessage"))))), m("div", {
+      "class": "features md:flex max-w-5xl mx-auto"
+    }, _GugutaRight__WEBPACK_IMPORTED_MODULE_6__["default"].component({
+      type: 'welcome',
+      info: 'Salut! Eu sunt Guguță! Alege un articol din partea stângă și citește!',
+      className: 'absolute w-48 md:ml-4 md:-mt-30'
+    })));
+  };
+
+  _proto.discussionPage = function discussionPage() {
+    return m("div", {
+      className: "DiscussionPage"
+    }, this.discussion.title());
+  };
+
+  _proto.load = function load() {
+    var preloadedDiscussion = flarum_app__WEBPACK_IMPORTED_MODULE_2___default.a.preloadedApiDocument();
+
+    if (preloadedDiscussion) {
+      // We must wrap this in a setTimeout because if we are mounting this
+      // component for the first time on page load, then any calls to m.redraw
+      // will be ineffective and thus any configs (scroll code) will be run
+      // before stuff is drawn to the page.
+      setTimeout(this.show.bind(this, preloadedDiscussion), 0);
+    } else {
+      var params = this.requestParams();
+      flarum_app__WEBPACK_IMPORTED_MODULE_2___default.a.store.find < flarum_common_models_Discussion__WEBPACK_IMPORTED_MODULE_4___default.a > ('discussions', this.discussion.id(), params).then(this.show.bind(this));
+    }
+
+    m.redraw();
+  }
+  /**
+   * Initialize the component to display the given discussion.
+   */
+  ;
+
+  _proto.show = function show(discussion) {
+    var _includedPosts$0$numb,
+        _includedPosts$,
+        _this2 = this;
+
+    flarum_app__WEBPACK_IMPORTED_MODULE_2___default.a.history.push('discussion', discussion.title());
+    flarum_app__WEBPACK_IMPORTED_MODULE_2___default.a.setTitle(discussion.title());
+    flarum_app__WEBPACK_IMPORTED_MODULE_2___default.a.setTitleCount(0); // When the API responds with a discussion, it will also include a number of
+    // posts. Some of these posts are included because they are on the first
+    // page of posts we want to display (determined by the `near` parameter) –
+    // others may be included because due to other relationships introduced by
+    // extensions. We need to distinguish the two so we don't end up displaying
+    // the wrong posts. We do so by filtering out the posts that don't have
+    // the 'discussion' relationship linked, then sorting and splicing.
+
+    var includedPosts = [];
+
+    if (discussion.payload && discussion.payload.included) {
+      var discussionId = discussion.id();
+      includedPosts = discussion.payload.included.filter(function (record) {
+        return record.type === 'posts' && record.relationships && record.relationships.discussion && !Array.isArray(record.relationships.discussion.data) && record.relationships.discussion.data.id === discussionId;
+      }) // We can make this assertion because posts should be in the store,
+      // since they were in the discussion's payload.
+      .map(function (record) {
+        return flarum_app__WEBPACK_IMPORTED_MODULE_2___default.a.store.getById < Post > ('posts', record.id);
+      }).sort(function (a, b) {
+        return a.number() - b.number();
+      }).slice(0, 20);
+    } // Set up the post stream for this discussion, along with the first page of
+    // posts we want to display. Tell the stream to scroll down and highlight
+    // the specific post that was routed to.
+
+
+    this.stream = new PostStreamState(discussion, includedPosts);
+    var rawNearParam = m.route.param('near');
+    var nearParam = rawNearParam === 'reply' ? 'reply' : parseInt(rawNearParam);
+    this.stream.goToNumber(nearParam || ((_includedPosts$0$numb = (_includedPosts$ = includedPosts[0]) == null ? void 0 : _includedPosts$.number()) != null ? _includedPosts$0$numb : 0), true).then(function () {
+      _this2.discussion = discussion;
+      flarum_app__WEBPACK_IMPORTED_MODULE_2___default.a.current.set('discussion', discussion);
+      flarum_app__WEBPACK_IMPORTED_MODULE_2___default.a.current.set('stream', _this2.stream);
+    });
+  };
+
+  _proto.requestParams = function requestParams() {
+    return {
+      bySlug: true,
+      page: {
+        near: this.near
+      }
+    };
+  };
+
+  return InlineArticleView;
+}(flarum_extensions_afrux_forum_widgets_core_common_components_Widget__WEBPACK_IMPORTED_MODULE_1___default.a);
+
+
+
+/***/ }),
+
+/***/ "./src/common/registerWidget.js":
+/*!**************************************!*\
+  !*** ./src/common/registerWidget.js ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var flarum_extensions_afrux_forum_widgets_core_common_extend_Widgets__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! flarum/extensions/afrux-forum-widgets-core/common/extend/Widgets */ "flarum/extensions/afrux-forum-widgets-core/common/extend/Widgets");
+/* harmony import */ var flarum_extensions_afrux_forum_widgets_core_common_extend_Widgets__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(flarum_extensions_afrux_forum_widgets_core_common_extend_Widgets__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_InlineArticleView__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/InlineArticleView */ "./src/common/components/InlineArticleView.js");
+
+
+/* harmony default export */ __webpack_exports__["default"] = (function (app) {
+  new flarum_extensions_afrux_forum_widgets_core_common_extend_Widgets__WEBPACK_IMPORTED_MODULE_0___default.a().add({
+    key: 'discussions',
+    component: _components_InlineArticleView__WEBPACK_IMPORTED_MODULE_1__["default"],
+    isDisabled: false,
+    isUnique: true,
+    placement: 'end',
+    position: 1
+  }).extend(app, 'tudor-economia-ui');
+});
+
+/***/ }),
+
+/***/ "./src/forum/components/ArticlePage.js":
+/*!*********************************************!*\
+  !*** ./src/forum/components/ArticlePage.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ArticlePage; });
+/* harmony import */ var _babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inheritsLoose */ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js");
+/* harmony import */ var flarum_app__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/app */ "flarum/app");
+/* harmony import */ var flarum_app__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_app__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var flarum_common_components_Page__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/common/components/Page */ "flarum/common/components/Page");
+/* harmony import */ var flarum_common_components_Page__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_common_components_Page__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var flarum_common_Component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/common/Component */ "flarum/common/Component");
+/* harmony import */ var flarum_common_Component__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_common_Component__WEBPACK_IMPORTED_MODULE_3__);
+
+
+
+
+
+var ArticlePage = /*#__PURE__*/function (_Component) {
+  Object(_babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__["default"])(ArticlePage, _Component);
+
+  function ArticlePage() {
+    return _Component.apply(this, arguments) || this;
+  }
+
+  var _proto = ArticlePage.prototype;
+
+  _proto.oninit = function oninit(vnode) {
+    _Component.prototype.oninit.call(this, vnode);
+
+    this.discussion = this.attrs.discussion || null;
+    this.stream;
+    this.near = 0;
+    this.useBrowserScrollRestoration = true;
+  };
+
+  _proto.view = function view() {
+    return m("div", {
+      className: "ArticlePage"
+    }, this.discussion.title());
+  };
+
+  return ArticlePage;
+}(flarum_common_Component__WEBPACK_IMPORTED_MODULE_3___default.a);
+
+
+
+/***/ }),
+
+/***/ "./src/forum/index.js":
+/*!****************************!*\
+  !*** ./src/forum/index.js ***!
+  \****************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _settings_moveButtonToRight_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./settings/moveButtonToRight.js */ "./src/forum/settings/moveButtonToRight.js");
+/* harmony import */ var _settings_dispatchSortItems_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./settings/dispatchSortItems.js */ "./src/forum/settings/dispatchSortItems.js");
+/* harmony import */ var _common_registerWidget__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../common/registerWidget */ "./src/common/registerWidget.js");
+/* harmony import */ var flarum_components_DiscussionListItem__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/components/DiscussionListItem */ "flarum/components/DiscussionListItem");
+/* harmony import */ var flarum_components_DiscussionListItem__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_components_DiscussionListItem__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var flarum_components_DiscussionPage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! flarum/components/DiscussionPage */ "flarum/components/DiscussionPage");
+/* harmony import */ var flarum_components_DiscussionPage__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(flarum_components_DiscussionPage__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! flarum/components/IndexPage */ "flarum/components/IndexPage");
+/* harmony import */ var flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! flarum/extend */ "flarum/extend");
+/* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(flarum_extend__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _common_components_InlineArticleView__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../common/components/InlineArticleView */ "./src/common/components/InlineArticleView.js");
+/* harmony import */ var flarum_helpers_highlight__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! flarum/helpers/highlight */ "flarum/helpers/highlight");
+/* harmony import */ var flarum_helpers_highlight__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(flarum_helpers_highlight__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var flarum_utils_escapeRegExp__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! flarum/utils/escapeRegExp */ "flarum/utils/escapeRegExp");
+/* harmony import */ var flarum_utils_escapeRegExp__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(flarum_utils_escapeRegExp__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var flarum_app__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! flarum/app */ "flarum/app");
+/* harmony import */ var flarum_app__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(flarum_app__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _components_ArticlePage__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/ArticlePage */ "./src/forum/components/ArticlePage.js");
+/* harmony import */ var flarum_common_helpers_listItems__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! flarum/common/helpers/listItems */ "flarum/common/helpers/listItems");
+/* harmony import */ var flarum_common_helpers_listItems__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(flarum_common_helpers_listItems__WEBPACK_IMPORTED_MODULE_12__);
+
+ // import CardItem from './settings/CardItem.js';
+
+
+
+
+
+
+
+
+
+
+
+
+flarum_app__WEBPACK_IMPORTED_MODULE_10___default.a.initializers.add('tudor/economia-ui', function () {
+  //moveButtonToRight();
+  //dispatchSortItems();
+  // CardItem();
+  // added by BlockCat
+  // console.log(app);
+  Object(_common_registerWidget__WEBPACK_IMPORTED_MODULE_2__["default"])(flarum_app__WEBPACK_IMPORTED_MODULE_10___default.a);
+  Object(flarum_extend__WEBPACK_IMPORTED_MODULE_6__["extend"])(flarum_components_DiscussionPage__WEBPACK_IMPORTED_MODULE_4___default.a.prototype, 'oninit', function () {
+    flarum_app__WEBPACK_IMPORTED_MODULE_10___default.a.discussions.refreshParams(flarum_app__WEBPACK_IMPORTED_MODULE_10___default.a.search.params(), m.route.param('page'));
+
+    if (flarum_app__WEBPACK_IMPORTED_MODULE_10___default.a.discussions.hasItems() || flarum_app__WEBPACK_IMPORTED_MODULE_10___default.a.discussions.isLoading()) {
+      var _app$pane;
+
+      (_app$pane = flarum_app__WEBPACK_IMPORTED_MODULE_10___default.a.pane) == null ? void 0 : _app$pane.enable();
+    }
+  });
+  Object(flarum_extend__WEBPACK_IMPORTED_MODULE_6__["extend"])(flarum_components_DiscussionPage__WEBPACK_IMPORTED_MODULE_4___default.a.prototype, 'view', function (view) {
+    var index = flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_5___default.a.prototype.sidebarItems(); // const index = IndexPage.prototype.view();
+
+    view.children.unshift(m("nav", {
+      className: "IndexPage-nav sideNav"
+    }, m("ul", null, flarum_common_helpers_listItems__WEBPACK_IMPORTED_MODULE_12___default()(index.toArray())))); // view.children.unshift(
+    //   index
+    // );
+  }); // extend(DiscussionListItem.prototype, 'view', function (view) {
+  //   // get needed data
+  //   const discussion = this.attrs.discussion;
+  //   let jumpTo = 0;
+  //   if (this.attrs.params.q) {
+  //     const post = discussion.mostRelevantPost();
+  //     if (post) {
+  //       jumpTo = post.number();
+  //     }
+  //     const phrase = escapeRegExp(this.attrs.params.q);
+  //     this.highlightRegExp = new RegExp(phrase + '|' + phrase.trim().replace(/\s+/g, '|'), 'gi');
+  //   } else {
+  //     jumpTo = Math.min(discussion.lastPostNumber(), (discussion.lastReadPostNumber() || 0) + 1);
+  //   }
+  //   // extract container with tags_autor from Vasile modification
+  //   // const tags_autor = view.children[2].children[2].children.pop();
+  //   // extract container with info from Vasile modification
+  //   const info = view.children[2].children[2].children.pop();
+  //   // remove DiscussionListItem-main container
+  //   view.children[2].children.splice(2, 1);
+  //   // create new DiscussionListItem-main container
+  //   const main = m('.DiscussionListItem-main', {
+  //     // onclick should open modal
+  //     // onclick: this.changeWidgetView.bind(this),
+  //   }, [
+  //     m('h3', {
+  //       className: 'DiscussionListItem-title',
+  //     }, highlight(discussion.title(), this.highlightRegExp)),
+  //     info,
+  //     // tags_autor,
+  //   ]);
+  //   // add new DiscussionListItem-main container in structure
+  //   view.children[2].children.splice(2, 0, main);
+  //   // console.log(main);
+  //   // console.log(view.children[2].children[2]);
+  // });
+  // DiscussionListItem.prototype.changeWidgetView = function () {
+  //   console.log(app);
+  //   app.discussion = this.attrs.discussion;
+  // console.log(app);
+  // const discussionURL = app.route.discussion(discussion);
+  // console.log(discussion.id());
+  // app.modal.show(ArticleModal, {
+  //   discussion: this.attrs.discussion,
+  // });
+  // extend(InlineArticleView.prototype, 'content', function (view) {
+  //   view.children.pop();
+  //   // console.log(view);
+  //   // const pageContent = DiscussionPage.component({id: discussionId, near: 0});
+  //   view.children.push(<ArticlePage discussion={discussion}/>);
+  //   console.log(view);
+  // });
+  // e.stopPropagation();
+  // };
+});
+
+/***/ }),
+
+/***/ "./src/forum/settings/dispatchSortItems.js":
+/*!*************************************************!*\
+  !*** ./src/forum/settings/dispatchSortItems.js ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var flarum_common_app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! flarum/common/app */ "flarum/common/app");
+/* harmony import */ var flarum_common_app__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(flarum_common_app__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/extend */ "flarum/extend");
+/* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_extend__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/components/IndexPage */ "flarum/components/IndexPage");
+/* harmony import */ var flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var flarum_components_LinkButton__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/components/LinkButton */ "flarum/components/LinkButton");
+/* harmony import */ var flarum_components_LinkButton__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_components_LinkButton__WEBPACK_IMPORTED_MODULE_3__);
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = (function () {
+  Object(flarum_extend__WEBPACK_IMPORTED_MODULE_1__["extend"])(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_2___default.a.prototype, 'viewItems', function (items) {
+    if (items.has('sort')) {
+      items.remove('sort');
+    } // items.add(
+    //     'Actuale',
+    //     LinkButton.component({
+    //       title: "Actuale",
+    //       className: 'Button Button--primary',
+    //       href: '/',
+    //     },
+    //       app.translator.trans('tudor-economia-ui.forum.sort_button_1')
+    //     )
+    // );
+    // items.add(
+    //     'Citite',
+    //     LinkButton.component({
+    //         title: "Citite",
+    //         className: 'Button Button--primary',
+    //         href: '/',
+    //     },
+    //         app.translator.trans('tudor-economia-ui.forum.sort_button_2')
+    //     )
+    // );
+
+
+    items.add('Noi', m(flarum_components_LinkButton__WEBPACK_IMPORTED_MODULE_3___default.a, {
+      href: "?sort=newest",
+      title: flarum_common_app__WEBPACK_IMPORTED_MODULE_0___default.a.translator.trans('tudor-economia-ui.forum.sort_button_3')
+    }, flarum_common_app__WEBPACK_IMPORTED_MODULE_0___default.a.translator.trans('tudor-economia-ui.forum.sort_button_3')));
+    items.add('Vechi', m(flarum_components_LinkButton__WEBPACK_IMPORTED_MODULE_3___default.a, {
+      href: "?sort=oldest",
+      title: flarum_common_app__WEBPACK_IMPORTED_MODULE_0___default.a.translator.trans('tudor-economia-ui.forum.sort_button_4')
+    }, flarum_common_app__WEBPACK_IMPORTED_MODULE_0___default.a.translator.trans('tudor-economia-ui.forum.sort_button_4')));
+    items.add('Vote', m(flarum_components_LinkButton__WEBPACK_IMPORTED_MODULE_3___default.a, {
+      href: "?sort=hot",
+      title: flarum_common_app__WEBPACK_IMPORTED_MODULE_0___default.a.translator.trans('tudor-economia-ui.forum.sort_button_5')
+    }, flarum_common_app__WEBPACK_IMPORTED_MODULE_0___default.a.translator.trans('tudor-economia-ui.forum.sort_button_5')));
+  });
+});
+
+/***/ }),
+
+/***/ "./src/forum/settings/moveButtonToRight.js":
+/*!*************************************************!*\
+  !*** ./src/forum/settings/moveButtonToRight.js ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var flarum_common_app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! flarum/common/app */ "flarum/common/app");
+/* harmony import */ var flarum_common_app__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(flarum_common_app__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/extend */ "flarum/extend");
+/* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_extend__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/components/IndexPage */ "flarum/components/IndexPage");
+/* harmony import */ var flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var flarum_components_Button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/components/Button */ "flarum/components/Button");
+/* harmony import */ var flarum_components_Button__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_components_Button__WEBPACK_IMPORTED_MODULE_3__);
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = (function () {
+  Object(flarum_extend__WEBPACK_IMPORTED_MODULE_1__["extend"])(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_2___default.a.prototype, 'sidebarItems', function (items) {
+    if (items.has('newDiscussion')) {
+      items.remove('newDiscussion');
+    }
+  });
+  Object(flarum_extend__WEBPACK_IMPORTED_MODULE_1__["extend"])(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_2___default.a.prototype, 'actionItems', function (items) {
+    var _this = this;
+
+    var canStartDiscussion = flarum_common_app__WEBPACK_IMPORTED_MODULE_0___default.a.forum.attribute('canStartDiscussion') || !flarum_common_app__WEBPACK_IMPORTED_MODULE_0___default.a.session.user;
+    items.add('newDiscussion', flarum_components_Button__WEBPACK_IMPORTED_MODULE_3___default.a.component({
+      icon: 'fas fa-edit',
+      className: 'Button Button--primary IndexPage-newDiscussion ',
+      itemClassName: 'App-primaryControl item-newDiscussion-stackoverflow',
+      onclick: function onclick() {
+        // If the user is not logged in, the promise rejects, and a login modal shows up.
+        // Since that's already handled, we dont need to show an error message in the console.
+        return _this.newDiscussionAction()["catch"](function () {});
+      },
+      disabled: !canStartDiscussion
+    }, flarum_common_app__WEBPACK_IMPORTED_MODULE_0___default.a.translator.trans(canStartDiscussion ? 'core.forum.index.start_discussion_button' : 'core.forum.index.cannot_start_discussion_button')));
+  });
+});
+
+/***/ }),
+
+/***/ "flarum/Component":
+/*!**************************************************!*\
+  !*** external "flarum.core.compat['Component']" ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['Component'];
+
+/***/ }),
+
+/***/ "flarum/app":
+/*!********************************************!*\
+  !*** external "flarum.core.compat['app']" ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['app'];
+
+/***/ }),
+
+/***/ "flarum/common/Component":
+/*!*********************************************************!*\
+  !*** external "flarum.core.compat['common/Component']" ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['common/Component'];
+
+/***/ }),
+
+/***/ "flarum/common/app":
+/*!***************************************************!*\
+  !*** external "flarum.core.compat['common/app']" ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['common/app'];
+
+/***/ }),
+
+/***/ "flarum/common/components/Page":
+/*!***************************************************************!*\
+  !*** external "flarum.core.compat['common/components/Page']" ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['common/components/Page'];
+
+/***/ }),
+
+/***/ "flarum/common/components/Placeholder":
+/*!**********************************************************************!*\
+  !*** external "flarum.core.compat['common/components/Placeholder']" ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['common/components/Placeholder'];
+
+/***/ }),
+
+/***/ "flarum/common/helpers/listItems":
+/*!*****************************************************************!*\
+  !*** external "flarum.core.compat['common/helpers/listItems']" ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['common/helpers/listItems'];
+
+/***/ }),
+
+/***/ "flarum/common/models/Discussion":
+/*!*****************************************************************!*\
+  !*** external "flarum.core.compat['common/models/Discussion']" ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['common/models/Discussion'];
+
+/***/ }),
+
+/***/ "flarum/components/Button":
+/*!**********************************************************!*\
+  !*** external "flarum.core.compat['components/Button']" ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['components/Button'];
+
+/***/ }),
+
+/***/ "flarum/components/DiscussionListItem":
+/*!**********************************************************************!*\
+  !*** external "flarum.core.compat['components/DiscussionListItem']" ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['components/DiscussionListItem'];
+
+/***/ }),
+
+/***/ "flarum/components/DiscussionPage":
+/*!******************************************************************!*\
+  !*** external "flarum.core.compat['components/DiscussionPage']" ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['components/DiscussionPage'];
+
+/***/ }),
+
+/***/ "flarum/components/IndexPage":
+/*!*************************************************************!*\
+  !*** external "flarum.core.compat['components/IndexPage']" ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['components/IndexPage'];
+
+/***/ }),
+
+/***/ "flarum/components/LinkButton":
+/*!**************************************************************!*\
+  !*** external "flarum.core.compat['components/LinkButton']" ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['components/LinkButton'];
+
+/***/ }),
+
+/***/ "flarum/components/Tooltip":
+/*!***********************************************************!*\
+  !*** external "flarum.core.compat['components/Tooltip']" ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['components/Tooltip'];
+
+/***/ }),
+
+/***/ "flarum/extend":
+/*!***********************************************!*\
+  !*** external "flarum.core.compat['extend']" ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['extend'];
+
+/***/ }),
+
+/***/ "flarum/extensions/afrux-forum-widgets-core/common/components/Widget":
+/*!*****************************************************************************************************!*\
+  !*** external "flarum.core.compat['extensions/afrux-forum-widgets-core/common/components/Widget']" ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['extensions/afrux-forum-widgets-core/common/components/Widget'];
+
+/***/ }),
+
+/***/ "flarum/extensions/afrux-forum-widgets-core/common/extend/Widgets":
+/*!**************************************************************************************************!*\
+  !*** external "flarum.core.compat['extensions/afrux-forum-widgets-core/common/extend/Widgets']" ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['extensions/afrux-forum-widgets-core/common/extend/Widgets'];
+
+/***/ }),
+
+/***/ "flarum/helpers/highlight":
+/*!**********************************************************!*\
+  !*** external "flarum.core.compat['helpers/highlight']" ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['helpers/highlight'];
+
+/***/ }),
+
+/***/ "flarum/utils/classList":
+/*!********************************************************!*\
+  !*** external "flarum.core.compat['utils/classList']" ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['utils/classList'];
+
+/***/ }),
+
+/***/ "flarum/utils/escapeRegExp":
+/*!***********************************************************!*\
+  !*** external "flarum.core.compat['utils/escapeRegExp']" ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['utils/escapeRegExp'];
+
+/***/ })
+
+/******/ });
 //# sourceMappingURL=forum.js.map
