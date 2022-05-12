@@ -2,7 +2,12 @@ import Widget from 'flarum/extensions/afrux-forum-widgets-core/common/components
 import app from 'flarum/app';
 import Placeholder from 'flarum/common/components/Placeholder';
 import Discussion from 'flarum/common/models/Discussion';
+import Button from "flarum/components/Button";
+import GugutaRight from './GugutaRight';
+// import 
 
+
+// TODO: change into latest articles
 export default class InlineArticleView extends Widget {
   oninit(vnode) {
     super.oninit(vnode);
@@ -23,9 +28,9 @@ export default class InlineArticleView extends Widget {
     return 'fas fa-cirlce';
   }
 
-  title() {
-    return app.translator.trans('InlineArticle');
-  }
+  // title() {
+  //   return app.translator.trans('InlineArticle');
+  // }
 
   content() {
     // TODO replace 'core.forum.discussion_list.empty_text'
@@ -33,12 +38,81 @@ export default class InlineArticleView extends Widget {
     this.discussion = app.discussion;
     // this.load();
 
-    return (
-      <div className="Tudor-InlineArticleViewWidget">
-        {this.discussion ? this.discussionPage() : Placeholder.component({ text })}
-      </div>
-    );
-  }
+    // return (
+    //   <div className="Tudor-InlineArticleViewWidget">
+    //     {/* {this.discussion ? this.discussionPage() : Placeholder.component({ text })} */}
+
+    //   </div>
+    // );
+    const slideUp = () => {
+      this.$().slideUp(this.hide.bind(this));
+  };
+    
+  
+      return (
+        <div className="Tudor-InlineArticleViewWidget">
+            <div class="container">
+                    {Button.component({
+                        icon: 'fas fa-times rounded-full px-4 py-3 hover:bg-blue-100',
+                        onclick: slideUp,
+                        className: 'Hero-close Button Button--icon Button--link',
+                    })}
+                
+                    <div className="containerNarrow">
+                        <h2 className="Hero-title" class="text-3xl leading-9 font-bold tracking-tight text-blue sm:text-4xl sm:leading-10">{app.forum.attribute("welcomeTitle")}</h2>
+                        <div className="Hero-subtitle" class="text-lg mt-2 mb-4">{m.trust(app.forum.attribute("welcomeMessage"))}</div>
+                    </div>
+                </div>
+                {/* <div class="md:flex mt-4 max-w-5xl mx-auto">
+                    <div class="sm:w-1/2 bg-blue-100 rounded-lg md:mr-8">
+                    <i class="icon fa fa-edit text-3xl text-blue-500 pt-8"></i>
+                        {m("h2", {className:"text-lg p-8 mx-auto"}, "this.welcomeSettings.leftText")}
+                        <div id="writeFromWelcomeHero" class="mb-8 pb-4">
+                            {
+                                Button.component({
+                                    onclick: () => {
+                                        slideUp();
+                                        $('button.Button.Button--primary.IndexPage-newDiscussion.hasIcon').click();
+                                    },
+                                    className: "bg-blue-500 hover:bg-blue-400 text-white text-lg font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded",
+                                    'aria-label': "Scrie un articol nou",
+                                    },
+                                    app.translator.trans("Scrie un articol nou"))
+                            }
+                        </div>
+                    </div>
+                    <div class="sm:w-1/2 bg-red-100 rounded-lg">
+                        <i class="icon fas fa-search text-3xl text-red-500 pt-8"></i>
+                        {m("h2", {className:"text-lg p-8 mx-auto"}, "Text")}
+                        <div id="browseFromWelcomeHero" class="mb-8 pb-4">
+                            {
+                                Button.component({
+                                    onclick: () => {
+                                        slideUp();
+                                    },
+                                    className: "bg-red-500 hover:bg-red-400 text-white text-lg font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded",
+                                    'aria-label': "Navighează prin acest portlet",
+                                    },
+                                    app.translator.trans("Navighează prin acest portlet"))
+                            }
+                        </div>
+                    </div>
+                </div> */}
+                
+                <div class="features md:flex max-w-5xl mx-auto">
+                    {
+                        GugutaRight.component({
+                            type: 'welcome',
+                            info: 'Salut! Eu sunt Guguță! Alege un articol din partea stângă și citește!',
+                            className: 'absolute w-48 md:ml-4 md:-mt-30',
+                        })
+                    }
+                    {/* <h1 id="features" class="text-3xl text-blue-300 mx-auto">{this.feature}</h1> */}
+                </div>
+              </div>
+      );
+    }
+
 
   discussionPage() {
     return (
