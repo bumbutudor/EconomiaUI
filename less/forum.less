@@ -1,3 +1,57 @@
+/* ArticleList scrollbar */
+.DiscussionPage-list::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Track */
+.DiscussionPage-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  // background: #e4edf6;
+}
+
+/* Handle */
+.DiscussionPage-list::-webkit-scrollbar-thumb {
+  background: rgb(211, 211, 211);
+  // background: #1c5d99;
+  border-radius: 7px;
+}
+
+/* Handle on hover */
+.DiscussionPage-list::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
+
+.DiscussionListItem-count {
+  display: none;
+}
+
+.DiscussionPage-list .DiscussionListItem-info {
+  white-space: nowrap !important; 
+}
+
+.DiscussionPage-list .DiscussionListItem-title {
+  max-width: 344px !important;
+}
+.panePinned .DiscussionPage-list {
+  left: 200px !important;
+  z-index: unset !important;
+}
+
+.Tudor-InlineArticleViewWidget{
+  text-align: center;
+  // background-color: #860a67;
+  color: #668099;
+}
+
+.Navigation-pin{
+  display: none;
+}
+
+
+.DiscussionPage {
+  margin-left: 200px;
+
+}
 .IndexPage-newDiscussion {
     width: auto !important;
     background: #3089da !important;
@@ -25,7 +79,7 @@
 
 // widget 
 .AfruxWidgets-sideNavAlt{
-  width: 80% !important;
+  width: 75% !important;
 }
 
 // discussion list
@@ -50,7 +104,8 @@
   display: none !important;
 }
 
-.container{
+// IndexPage
+.IndexPage .container{
   margin-left: unset !important;
 }
 
@@ -190,24 +245,24 @@
 // }
 
 
-.alternateLayout .fa-arrow-up:before {
-  content: "\f0d8";
-  font-size: 28px;
-}
+// .alternateLayout .fa-arrow-up:before {
+//   content: "\f0d8";
+//   font-size: 28px;
+// }
 
-.alternateLayout .fa-arrow-down:before {
-  content: "\f0d7";
-  font-size: 28px;
-}
+// .alternateLayout .fa-arrow-down:before {
+//   content: "\f0d7";
+//   font-size: 28px;
+// }
 
-.DiscussionListItem-votes.alternateLayout:before {
-  content: "Voturi";
-  color: #19548a;
-}
+// .DiscussionListItem-votes.alternateLayout:before {
+//   content: "Voturi";
+//   color: #19548a;
+// }
 
-.DiscussionListItem-votes.alternateLayout span {
-  font-size: 20px !important;
-}
+// .DiscussionListItem-votes.alternateLayout span {
+//   font-size: 20px !important;
+// }
 
 // .DiscussionListItem-count:before {
 //   font-family: inherit !important;
